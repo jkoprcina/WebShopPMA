@@ -1,0 +1,11 @@
+.main {
+  width: 300px;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  margin: 10px;
+}
