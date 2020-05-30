@@ -1,5 +1,5 @@
 import React from "react";
-import "./filter.css";
+import "./css/filter.css";
 
 const Filter = (props) => {
   return <div className="filter">Filter</div>;

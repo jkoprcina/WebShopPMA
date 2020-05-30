@@ -1,7 +1,17 @@
 import React from "react";
-import "./article.css";
+import { NavLink } from "reactstrap";
+import { Link } from "react-router-dom";
+import "./css/article.css";
 
 const Article = (props) => {
-  return <div className="article">Article</div>;
+  return (
+    <NavLink
+      tag={Link}
+      className="text-dark"
+      to={`/article/${props.article.id}`}
+    >
+      <div className="article">Article</div>
+    </NavLink>
+  );
 };
 export default Article;

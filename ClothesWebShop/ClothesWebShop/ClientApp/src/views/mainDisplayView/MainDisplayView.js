@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import Display from "./Display";
 import Filter from "./Filter";
-import "./main.css";
 import { getArticles } from "./apiRequests";
+import "./css/main.css";
 
 export class MainDisplayView extends Component {
   state = {
     articles: [],
   };
+
   componentDidMount() {
     getArticles().then((articles) => {
       this.setState({ articles });
-      console.log(this.state);
     });
   }
+
   render() {
     const { articles } = this.state;
     return (

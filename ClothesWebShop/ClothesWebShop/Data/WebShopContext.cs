@@ -7,9 +7,9 @@ namespace ClothesWebShop.Data
 {
     public class WebShopContext : DbContext
     {
-        public WebShopContext(DbContextOptions<WebShopContext> options) : base(options)
-        {
-
+        public WebShopContext(DbContextOptions<WebShopContext> options) : base(options) 
+        { 
+        
         }
 
         public DbSet<Article> Articles { get; set; }
