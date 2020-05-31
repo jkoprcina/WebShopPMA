@@ -1,44 +1,67 @@
-import React, { Component } from "react";
+import React from "react";
 import ImageDisplay from "./ImageDisplay";
 import Info from "./Info";
 import { getArticle, getBuyer } from "./apiRequests";
+import { connect } from "react-redux";
+import store from "../../redux/store";
+import { addArticleToBasket, addArticle } from "../../redux/modules/main";
 import "./css/articleView.css";
 
-export class ArticleView extends Component {
-  state = {
-    article: null,
-    buyer: null,
+class ArticleView extends React.Component {
+  updateStateFromStore = () => {
+    const currentState = this.props.article;
+    if (this.state !== currentState) {
+      this.setState(currentState);
+    }
   };
-
   componentDidMount() {
-    getArticle(this.props.match.params.id).then((article) => {
-      console.log(article);
-      if (article !== undefined) {
-        this.setState({ article });
-      }
-    });
+    this.unsubscribeStore = store.subscribe(this.updateStateFromStore);
+    let articleId = this.props.match.params.id;
+    if (this.props.article === null || this.props.article.id !== articleId) {
+      getArticle(articleId).then((article) => {
+        if (article !== undefined) {
+          this.props.addArticle(article);
+        }
+      });
+    }
   }
 
-  handleBuyArticle = () => {
+  componentWillUnmount() {
+    this.unsubscribeStore();
+  }
+
+  handleAddToBasket = () => {
     getBuyer("password", "something.somebody@gmail.com").then((buyer) => {
-      console.log(buyer);
       if (buyer !== undefined) {
         this.setState({ buyer });
       }
     });
+    let article = this.props.article;
+    article.ammountInBasket = 1;
+    this.props.addArticleToBasket(this.props.article);
   };
 
   render() {
-    const { article } = this.state;
     return (
       <div className="article-view">
         <ImageDisplay />
-        {article === null ? (
+        {this.props.article === null ? (
           <div></div>
         ) : (
-          <Info article={article} buyArticle={this.handleBuyArticle} />
+          <Info
+            article={this.props.article}
+            addToBasket={this.handleAddToBasket}
+          />
         )}
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  article: state.main.article,
+});
+
+const mapDispatchToProps = { addArticleToBasket, addArticle };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleView);

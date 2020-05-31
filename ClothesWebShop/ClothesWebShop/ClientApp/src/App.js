@@ -1,18 +1,25 @@
-import React, { Component } from "react";
-import { Route } from "react-router";
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Route } from "react-router-dom";
 import { Layout } from "./views/Layout";
-import { MainDisplayView } from "./views/mainDisplayView/MainDisplayView";
+import MainDisplayView from "./views/mainDisplayView/MainDisplayView";
 import { LoginRegisterView } from "./views/loginRegisterView/LoginRegisterView";
-import { ArticleView } from "./views/articleView/ArticleView";
+import ArticleView from "./views/articleView/ArticleView";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
-export default class App extends Component {
+export default class App extends React.Component {
   render() {
     return (
-      <Layout>
-        <Route exact path="/" component={MainDisplayView} />
-        <Route path="/login" component={LoginRegisterView} />
-        <Route path="/article/:id" component={ArticleView} />
-      </Layout>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Layout>
+            <Route exact path="/" component={MainDisplayView} />
+            <Route path="/login" component={LoginRegisterView} />
+            <Route path="/article/:id" component={ArticleView} />
+          </Layout>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }

@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
 
-import buyers from "./buyer";
+import main from "./main";
 
-export default combineReducers({ buyer });
+export default combineReducers({ main });
