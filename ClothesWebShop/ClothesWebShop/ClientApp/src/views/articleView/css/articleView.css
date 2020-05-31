@@ -1,0 +1,6 @@
+.article-view {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid green;
+  border-radius: 5px;
+}

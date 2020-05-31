@@ -18,5 +18,17 @@ namespace ClothesWebShop.Controllers
         {
             return Ok(_articleRepository.Get()); 
         }
+
+        [HttpGet("get-by-id")]
+        public IActionResult GetById(int id)
+        {
+            var article = _articleRepository.GetById(id);
+            if (article == null) 
+            { 
+                return Forbid(); 
+            }
+
+            return Ok(article);
+        }
     }
 }

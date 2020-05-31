@@ -98,8 +98,26 @@ namespace ClothesWebShop.Data
                 }
             };
 
+            var buyers = new List<Buyer>()
+            {
+                new Buyer()
+                {
+                    Id = 1,
+                    FirstName = "Josip",
+                    LastName = "Koprcina",
+                    Email = "something.somebody@gmail.com",
+                    Username = "jkoprcina",
+                    Password = "password",
+                    PhoneNumber = "0995554433"
+                }
+            };
+
             modelBuilder.Entity<Article>().HasData(
                 articles
+            );
+
+            modelBuilder.Entity<Buyer>().HasData(
+                buyers
             );
         }
     }

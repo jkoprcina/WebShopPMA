@@ -11,7 +11,7 @@ export default class App extends Component {
       <Layout>
         <Route exact path="/" component={MainDisplayView} />
         <Route path="/login" component={LoginRegisterView} />
-        <Route path="/article" component={(props) => ArticleView} />
+        <Route path="/article/:id" component={ArticleView} />
       </Layout>
     );
   }

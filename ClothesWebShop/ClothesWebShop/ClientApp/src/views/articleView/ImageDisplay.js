@@ -1,6 +1,7 @@
 import React from "react";
+import "./css/imageDisplay.css";
 
-const Article = (props) => {
-  return <div className="article">Article</div>;
+const ImageDisplay = (props) => {
+  return <div className="image-display">Image Display</div>;
 };
-export default Article;
+export default ImageDisplay;

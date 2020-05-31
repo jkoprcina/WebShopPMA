@@ -18,5 +18,10 @@ namespace ClothesWebShop.Repository
         {
             return _context.Articles.ToList();
         }
+
+        public Article GetById(int id)
+        {
+            return _context.Articles.FirstOrDefault(a => a.Id == id);
+        }
     }
 }

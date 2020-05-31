@@ -6,5 +6,7 @@ namespace ClothesWebShop.Repository
     public interface IArticleRepository
     {
         List<Article> Get();
+
+        Article GetById(int id);
     }
 }

@@ -177,6 +177,11 @@ namespace ClothesWebShop.Migrations
                     { 6, 10, null, "Plain", "Green", "A plain shirt", "Shirt", 22.5, 0, 4 }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Buyers",
+                columns: new[] { "Id", "Email", "FirstName", "LastName", "Password", "PhoneNumber", "Username" },
+                values: new object[] { 1, "something.somebody@gmail.com", "Josip", "Koprcina", "password", "0995554433", "jkoprcina" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_BuyerId",
                 table: "Addresses",
