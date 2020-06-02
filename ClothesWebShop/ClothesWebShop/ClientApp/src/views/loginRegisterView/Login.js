@@ -4,8 +4,18 @@ const Login = (props) => {
   return (
     <div>
       <section>
-        <input type="email" placeholder="E-mail..." />
-        <input type="password" placeholder="Password..." />
+        <input
+          type="email"
+          placeholder="E-mail..."
+          value={props.email}
+          onChange={(e) => props.updateEmailValue(e)}
+        />
+        <input
+          type="password"
+          placeholder="Password..."
+          value={props.password}
+          onChange={(e) => props.updatePasswordValue(e)}
+        />
         <button onClick={props.login}>LOGIN</button>
       </section>
       <section>

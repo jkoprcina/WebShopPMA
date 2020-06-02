@@ -11,7 +11,7 @@ namespace ClothesWebShop.Data.Models
         public DateTime ExpirationDate { get; set; }
         public bool IsMainPaymentMethod { get; set; }
         
-        public int BuyerId { get; set; }
-        public Buyer Buyer { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

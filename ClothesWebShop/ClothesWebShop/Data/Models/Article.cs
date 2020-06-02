@@ -1,4 +1,6 @@
 ﻿using ClothesWebShop.Data.Enums;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
 namespace ClothesWebShop.Data.Models
@@ -7,6 +9,7 @@ namespace ClothesWebShop.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public Sizes Size { get; set; }
         public double Price { get; set; }
         public string Description { get; set; }

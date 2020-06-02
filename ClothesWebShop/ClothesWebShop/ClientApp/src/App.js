@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Layout } from "./views/Layout";
 import MainDisplayView from "./views/mainDisplayView/MainDisplayView";
-import { LoginRegisterView } from "./views/loginRegisterView/LoginRegisterView";
+import LoginRegisterView from "./views/loginRegisterView/LoginRegisterView";
 import ArticleView from "./views/articleView/ArticleView";
 import { Provider } from "react-redux";
 import store from "./redux/store";

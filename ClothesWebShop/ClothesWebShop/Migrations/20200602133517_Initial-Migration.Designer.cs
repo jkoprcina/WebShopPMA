@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClothesWebShop.Migrations
 {
     [DbContext(typeof(WebShopContext))]
-    [Migration("20200531094253_Initial Migration")]
+    [Migration("20200602133517_Initial-Migration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,9 +31,6 @@ namespace ClothesWebShop.Migrations
                     b.Property<int>("AddressNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("BuyerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
@@ -49,9 +46,12 @@ namespace ClothesWebShop.Migrations
                     b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("BuyerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Addresses");
                 });
@@ -214,7 +214,66 @@ namespace ClothesWebShop.Migrations
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("ClothesWebShop.Data.Models.Buyer", b =>
+            modelBuilder.Entity("ClothesWebShop.Data.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("EstimatedDeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelivered")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ClothesWebShop.Data.Models.PaymentMethod", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CVV")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HolderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsMainPaymentMethod")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PaymentMethods");
+                });
+
+            modelBuilder.Entity("ClothesWebShop.Data.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -233,93 +292,30 @@ namespace ClothesWebShop.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Buyers");
+                    b.ToTable("Users");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Email = "something.somebody@gmail.com",
+                            Email = "e",
                             FirstName = "Josip",
                             LastName = "Koprcina",
-                            Password = "password",
-                            PhoneNumber = "0995554433",
+                            Password = "p",
                             Username = "jkoprcina"
                         });
                 });
 
-            modelBuilder.Entity("ClothesWebShop.Data.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BuyerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EstimatedDeliveryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDelivered")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BuyerId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("ClothesWebShop.Data.Models.PaymentMethod", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("BuyerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CVV")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("HolderName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsMainPaymentMethod")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Number")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BuyerId");
-
-                    b.ToTable("PaymentMethods");
-                });
-
             modelBuilder.Entity("ClothesWebShop.Data.Models.Address", b =>
                 {
-                    b.HasOne("ClothesWebShop.Data.Models.Buyer", "Buyer")
+                    b.HasOne("ClothesWebShop.Data.Models.User", "User")
                         .WithMany("Addresses")
-                        .HasForeignKey("BuyerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -348,18 +344,18 @@ namespace ClothesWebShop.Migrations
 
             modelBuilder.Entity("ClothesWebShop.Data.Models.Order", b =>
                 {
-                    b.HasOne("ClothesWebShop.Data.Models.Buyer", "Buyer")
+                    b.HasOne("ClothesWebShop.Data.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("BuyerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("ClothesWebShop.Data.Models.PaymentMethod", b =>
                 {
-                    b.HasOne("ClothesWebShop.Data.Models.Buyer", "Buyer")
+                    b.HasOne("ClothesWebShop.Data.Models.User", "User")
                         .WithMany("PaymentMethods")
-                        .HasForeignKey("BuyerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

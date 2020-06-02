@@ -1,7 +1,7 @@
 import React from "react";
 import ImageDisplay from "./ImageDisplay";
 import Info from "./Info";
-import { getArticle, getBuyer } from "./apiRequests";
+import { getArticle, getUser } from "../../apiRequests";
 import { connect } from "react-redux";
 import store from "../../redux/store";
 import { addArticleToBasket, addArticle } from "../../redux/modules/main";
@@ -14,6 +14,7 @@ class ArticleView extends React.Component {
       this.setState(currentState);
     }
   };
+
   componentDidMount() {
     this.unsubscribeStore = store.subscribe(this.updateStateFromStore);
     let articleId = this.props.match.params.id;
@@ -31,9 +32,9 @@ class ArticleView extends React.Component {
   }
 
   handleAddToBasket = () => {
-    getBuyer("password", "something.somebody@gmail.com").then((buyer) => {
-      if (buyer !== undefined) {
-        this.setState({ buyer });
+    getUser("something.somebody@gmail.com", "password").then((user) => {
+      if (user !== undefined) {
+        this.setState({ user });
       }
     });
     let article = this.props.article;

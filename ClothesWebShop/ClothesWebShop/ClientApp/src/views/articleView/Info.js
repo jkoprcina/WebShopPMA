@@ -8,7 +8,7 @@ const Info = (props) => {
       <p>Short description: {props.article.description}</p>
       <p>Price: {props.article.price} €</p>
       <p>Ammount available: {props.article.ammountAvailable}</p>
-      <button onClick={props.addToBasket}>Buy</button>
+      <button onClick={props.addToBasket}>Add To Basket</button>
     </div>
   );
 };

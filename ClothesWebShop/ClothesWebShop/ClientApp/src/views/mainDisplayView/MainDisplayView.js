@@ -1,7 +1,7 @@
 import React from "react";
 import Display from "./Display";
 import Filter from "./Filter";
-import { getArticles } from "./apiRequests";
+import { getArticles } from "../../apiRequests";
 import { connect } from "react-redux";
 import { addArticles } from "../../redux/modules/main";
 import store from "../../redux/store";

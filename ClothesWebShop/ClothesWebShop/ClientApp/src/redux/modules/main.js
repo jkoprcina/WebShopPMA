@@ -1,10 +1,10 @@
 const ADD_ARTICLE_TO_BASKET = "ADD_ARTICLE_TO_BASKET";
 const ADD_ARTICLE = "ADD_ARTICLE";
 const ADD_ARTICLES = "ADD_ARTICLES";
-const LOGIN_USER = "LOGIN_USER";
+const ADD_USER = "ADD_USER";
 
 const initialState = {
-  buyer: null,
+  user: null,
   basket: [],
   article: null,
   articles: [],
@@ -31,35 +31,43 @@ export const addArticleToBasket = (article) => {
   };
 };
 
-export const loginBuyer = (buyer) => {
+export const addUser = (user) => {
+  console.log(user);
   return {
-    type: LOGIN_USER,
-    payload: { buyer },
+    type: ADD_USER,
+    payload: { user },
   };
 };
 
+var article, articles, basket, user, isAlreadyInBasket;
+
 const reducer = (state = initialState, action) => {
-  switch (action.type) {
+    switch (action.type) {
+    case ADD_USER:
+      console.log(action.type);
+      user = action.payload.user;
+      return { ...state, user };
     case ADD_ARTICLE:
-      var article = action.payload.article;
+      article = action.payload.article;
       return { ...state, article };
     case ADD_ARTICLES:
-      var articles = action.payload.articles;
+      articles = action.payload.articles;
       return { ...state, articles };
     case ADD_ARTICLE_TO_BASKET:
-      var basket = state.basket;
+      basket = state.basket;
       article = action.payload.article;
-      basket.forEach((element) => {
+      isAlreadyInBasket = false;
+      // DOESN'T WORK
+      basket.foreach((element) => {
         if (element.id === article.id) {
           element.ammountInBasket += article.ammountInBasket;
-          return { ...state, basket };
+          isAlreadyInBasket = true;
         }
       });
-      basket.push(article);
+      if (!isAlreadyInBasket) {
+        basket.push(article);
+      }
       return { ...state, basket };
-    case LOGIN_USER:
-      var buyer = action.payload.buyer;
-      return { ...state, buyer };
     default:
       return { ...state };
   }

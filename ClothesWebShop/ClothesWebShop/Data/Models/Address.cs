@@ -10,7 +10,7 @@
         public string ContactNumber { get; set; }
         public bool IsMainAddress { get; set; }
 
-        public int BuyerId { get; set; }
-        public Buyer Buyer { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

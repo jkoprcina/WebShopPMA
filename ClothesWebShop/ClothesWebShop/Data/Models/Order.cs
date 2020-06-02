@@ -11,8 +11,8 @@ namespace ClothesWebShop.Data.Models
         public double TotalPrice { get; set; }
         public bool IsDelivered { get; set; }
 
-        public int BuyerId { get; set; }
-        public Buyer Buyer { get;set; }
+        public int UserId { get; set; }
+        public User User { get;set; }
         public ICollection<ArticleOrder> ArticleOrders { get; set; }
     }
 }

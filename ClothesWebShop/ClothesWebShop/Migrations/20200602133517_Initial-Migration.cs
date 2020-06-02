@@ -21,21 +21,20 @@ namespace ClothesWebShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Buyers",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Username = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Buyers", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,15 +76,15 @@ namespace ClothesWebShop.Migrations
                     PostalCode = table.Column<string>(nullable: true),
                     ContactNumber = table.Column<string>(nullable: true),
                     IsMainAddress = table.Column<bool>(nullable: false),
-                    BuyerId = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Addresses_Buyers_BuyerId",
-                        column: x => x.BuyerId,
-                        principalTable: "Buyers",
+                        name: "FK_Addresses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -100,15 +99,15 @@ namespace ClothesWebShop.Migrations
                     EstimatedDeliveryDate = table.Column<DateTime>(nullable: false),
                     TotalPrice = table.Column<double>(nullable: false),
                     IsDelivered = table.Column<bool>(nullable: false),
-                    BuyerId = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Buyers_BuyerId",
-                        column: x => x.BuyerId,
-                        principalTable: "Buyers",
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -123,15 +122,15 @@ namespace ClothesWebShop.Migrations
                     CVV = table.Column<string>(nullable: true),
                     ExpirationDate = table.Column<DateTime>(nullable: false),
                     IsMainPaymentMethod = table.Column<bool>(nullable: false),
-                    BuyerId = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PaymentMethods", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PaymentMethods_Buyers_BuyerId",
-                        column: x => x.BuyerId,
-                        principalTable: "Buyers",
+                        name: "FK_PaymentMethods_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -178,14 +177,14 @@ namespace ClothesWebShop.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Buyers",
-                columns: new[] { "Id", "Email", "FirstName", "LastName", "Password", "PhoneNumber", "Username" },
-                values: new object[] { 1, "something.somebody@gmail.com", "Josip", "Koprcina", "password", "0995554433", "jkoprcina" });
+                table: "Users",
+                columns: new[] { "Id", "Email", "FirstName", "LastName", "Password", "Username" },
+                values: new object[] { 1, "e", "Josip", "Koprcina", "p", "jkoprcina" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_BuyerId",
+                name: "IX_Addresses_UserId",
                 table: "Addresses",
-                column: "BuyerId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleOrders_ArticleId",
@@ -203,14 +202,14 @@ namespace ClothesWebShop.Migrations
                 column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_BuyerId",
+                name: "IX_Orders_UserId",
                 table: "Orders",
-                column: "BuyerId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PaymentMethods_BuyerId",
+                name: "IX_PaymentMethods_UserId",
                 table: "PaymentMethods",
-                column: "BuyerId");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -234,7 +233,7 @@ namespace ClothesWebShop.Migrations
                 name: "Brands");
 
             migrationBuilder.DropTable(
-                name: "Buyers");
+                name: "Users");
         }
     }
 }

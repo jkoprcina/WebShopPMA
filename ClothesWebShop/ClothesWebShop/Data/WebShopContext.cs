@@ -14,7 +14,7 @@ namespace ClothesWebShop.Data
 
         public DbSet<Article> Articles { get; set; }
         public DbSet<Brand> Brands { get; set; }
-        public DbSet<Buyer> Buyers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Order> Orders { get;set; }
@@ -98,17 +98,16 @@ namespace ClothesWebShop.Data
                 }
             };
 
-            var buyers = new List<Buyer>()
+            var users = new List<User>()
             {
-                new Buyer()
+                new User()
                 {
                     Id = 1,
                     FirstName = "Josip",
                     LastName = "Koprcina",
-                    Email = "something.somebody@gmail.com",
+                    Email = "e",
                     Username = "jkoprcina",
-                    Password = "password",
-                    PhoneNumber = "0995554433"
+                    Password = "p"
                 }
             };
 
@@ -116,8 +115,8 @@ namespace ClothesWebShop.Data
                 articles
             );
 
-            modelBuilder.Entity<Buyer>().HasData(
-                buyers
+            modelBuilder.Entity<User>().HasData(
+                users
             );
         }
     }

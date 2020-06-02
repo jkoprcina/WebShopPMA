@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 
 namespace ClothesWebShop
 {
@@ -29,7 +30,11 @@ namespace ClothesWebShop
                 options.UseSqlServer(Configuration.GetConnectionString("WebShopContextString")));
 
             services.AddScoped<IArticleRepository, ArticleRepository>();
-            services.AddScoped<IBuyerRepository, BuyerRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddMvc().AddNewtonsoftJson(options => 
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
+            
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
