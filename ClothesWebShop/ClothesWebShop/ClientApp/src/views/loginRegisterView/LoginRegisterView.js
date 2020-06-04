@@ -5,7 +5,7 @@ import { getUser, createUser } from "../../apiRequests";
 import { validateLogin, validateRegister } from "../../validations";
 import { connect } from "react-redux";
 import store from "../../redux/store";
-import { addUser } from "../../redux/modules/main";
+import { attachUser } from "../../redux/modules/main";
 import "./main.css";
 
 class LoginRegisterView extends React.Component {
@@ -49,64 +49,97 @@ class LoginRegisterView extends React.Component {
   }
 
   handleChangeToLoginPage = () => {
-    this.setState({ isLogin: true });
+    this.setState({
+      isLogin: true,
+    });
     this.emptyState();
   };
 
   handleChangeToRegisterPage = () => {
-    this.setState({ isLogin: false });
+    this.setState({
+      isLogin: false,
+    });
     this.emptyState();
+  };
+
+  goToMainPage = () => {
+    if (this.props.user !== null) {
+      this.props.history.push("/");
+    }
   };
 
   handleLogin = () => {
     const { email, password } = this.state;
-    console.log("Email: " + email + "    password: " + password);
-    if (validateLogin(email, password)) {
+    let handleLoginError = validateLogin(email, password);
+    if (handleLoginError === "none") {
       getUser(email, password).then((user) => {
         if (user !== null) {
-          addUser(user);
+          this.props.attachUser(user);
         }
       });
-      this.emptyState();
+      this.goToMainPage();
+    } else {
+      console.log(handleLoginError);
     }
   };
 
   handleRegister = () => {
     const { firstName, lastName, username, email, password } = this.state;
-    if (validateRegister(firstName, lastName, username, email, password)) {
+    let handleRegisterError = validateRegister(
+      firstName,
+      lastName,
+      username,
+      email,
+      password
+    );
+    if (handleRegisterError === "none") {
       createUser(firstName, lastName, username, email, password).then(
         (user) => {
           if (user !== null) {
-            addUser(user);
+            this.props.attachUser(user);
           }
         }
       );
-      this.emptyState();
+      this.goToMainPage();
+    } else {
+      console.log(handleRegisterError);
     }
   };
 
   handleUpdateFirstNameValue = (e) => {
-    this.setState({ firstName: e.target.value });
+    this.setState({
+      firstName: e.target.value,
+    });
   };
 
   handleUpdateLastNameValue = (e) => {
-    this.setState({ lastName: e.target.value });
+    this.setState({
+      lastName: e.target.value,
+    });
   };
 
   handleUpdateEmailValue = (e) => {
-    this.setState({ email: e.target.value });
+    this.setState({
+      email: e.target.value,
+    });
   };
 
   handleUpdateUsernameValue = (e) => {
-    this.setState({ username: e.target.value });
+    this.setState({
+      username: e.target.value,
+    });
   };
 
   handleUpdatePasswordValue = (e) => {
-    this.setState({ password: e.target.value });
+    this.setState({
+      password: e.target.value,
+    });
   };
 
   handleUpdatePasswordRepeatValue = (e) => {
-    this.setState({ passwordRepeat: e.target.value });
+    this.setState({
+      passwordRepeat: e.target.value,
+    });
   };
 
   render() {
@@ -121,6 +154,7 @@ class LoginRegisterView extends React.Component {
     } = this.state;
     return (
       <div className="main">
+        {" "}
         {isLogin ? (
           <Login
             email={email}
@@ -147,7 +181,7 @@ class LoginRegisterView extends React.Component {
             register={this.handleRegister}
             changeToLoginPage={this.handleChangeToLoginPage}
           />
-        )}
+        )}{" "}
       </div>
     );
   }
@@ -157,6 +191,8 @@ const mapStateToProps = (state) => ({
   user: state.main.user,
 });
 
-const mapDispatchToProps = { addUser };
+const mapDispatchToProps = {
+  attachUser,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginRegisterView);

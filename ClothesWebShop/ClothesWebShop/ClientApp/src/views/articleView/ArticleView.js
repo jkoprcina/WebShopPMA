@@ -1,7 +1,7 @@
 import React from "react";
 import ImageDisplay from "./ImageDisplay";
 import Info from "./Info";
-import { getArticle, getUser } from "../../apiRequests";
+import { getArticle } from "../../apiRequests";
 import { connect } from "react-redux";
 import store from "../../redux/store";
 import { addArticleToBasket, addArticle } from "../../redux/modules/main";
@@ -32,14 +32,13 @@ class ArticleView extends React.Component {
   }
 
   handleAddToBasket = () => {
-    getUser("something.somebody@gmail.com", "password").then((user) => {
-      if (user !== undefined) {
-        this.setState({ user });
-      }
-    });
-    let article = this.props.article;
-    article.ammountInBasket = 1;
-    this.props.addArticleToBasket(this.props.article);
+    if (this.props.user === null) {
+      this.props.history.push("/login");
+    } else {
+      let article = this.props.article;
+      article.ammountInBasket = 1;
+      this.props.addArticleToBasket(this.props.article);
+    }
   };
 
   render() {
@@ -61,6 +60,7 @@ class ArticleView extends React.Component {
 
 const mapStateToProps = (state) => ({
   article: state.main.article,
+  user: state.main.user,
 });
 
 const mapDispatchToProps = { addArticleToBasket, addArticle };

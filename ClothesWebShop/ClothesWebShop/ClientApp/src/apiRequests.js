@@ -24,7 +24,6 @@ export const getUser = (email, password) =>
   axios
     .get("api/users", { params: { email, password } })
     .then((response) => {
-      console.log(response.data);
       return response.data;
     })
     .catch(() => {

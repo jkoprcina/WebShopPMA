@@ -4,7 +4,7 @@ export const validateLogin = (email, password) => {
   } else if (password === "") {
     return "You must enter a password";
   }
-  return true;
+  return "none";
 };
 
 export const validateRegister = (
@@ -23,5 +23,5 @@ export const validateRegister = (
   ) {
     return false;
   }
-  return true;
+  return "none";
 };

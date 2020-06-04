@@ -9,6 +9,9 @@ import {
   NavLink,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import store from "../redux/store";
+import {} from "../redux/modules/main";
 import "./NavMenu.css";
 
 export class NavMenu extends Component {
@@ -21,6 +24,21 @@ export class NavMenu extends Component {
     this.state = {
       collapsed: true,
     };
+  }
+
+  updateStateFromStore = () => {
+    const currentState = this.props.user;
+    if (this.state !== currentState) {
+      this.setState(currentState);
+    }
+  };
+
+  componentDidMount() {
+    this.unsubscribeStore = store.subscribe(this.updateStateFromStore);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeStore();
   }
 
   toggleNavbar() {
@@ -52,11 +70,19 @@ export class NavMenu extends Component {
                     Home
                   </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/login">
-                    Login/Register
-                  </NavLink>
-                </NavItem>
+                {this.props.user === null ? (
+                  <NavItem>
+                    <NavLink tag={Link} className="text-dark" to="/login">
+                      Login/Register
+                    </NavLink>
+                  </NavItem>
+                ) : (
+                  <NavItem>
+                    <NavLink tag={Link} className="text-dark" to="/login">
+                      Login/Register
+                    </NavLink>
+                  </NavItem>
+                )}
               </ul>
             </Collapse>
           </Container>
@@ -65,3 +91,11 @@ export class NavMenu extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  user: state.main.user,
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);

@@ -3,9 +3,7 @@ import Address from "./Address";
 import MainAddress from "./MainAddress";
 import MainPaymentMethod from "./MainPaymentMethod";
 import PaymentMethod from "./PaymentMethod";
-import {} from "../../apiRequests";
 import { connect } from "react-redux";
-import {} from "../../redux/modules/main";
 import store from "../../redux/store";
 
 class BasketView extends React.Component {
@@ -15,8 +13,10 @@ class BasketView extends React.Component {
       this.setState(currentState);
     }
   };
+
   componentWillMount() {
     if (this.props.user === null) {
+      console.log(this.props.user);
       this.props.history.push("/");
       this.props.history.go("/");
     }
@@ -34,14 +34,14 @@ class BasketView extends React.Component {
       <div>
         <MainAddress />
         {this.props.user.adresses.map((address) =>
-          !address.isMainAddress ? <Address address={address} /> : <div></div>
+          address.isMainAddress ? <div></div> : <Address address={address} />
         )}
         <MainPaymentMethod />
         {this.props.user.paymentMethods.map((paymentMethod) =>
-          !paymentMethod.isMainPaymentMethod ? (
-            <PaymentMethod paymentMethod={paymentMethod} />
-          ) : (
+          paymentMethod.isMainPaymentMethod ? (
             <div></div>
+          ) : (
+            <PaymentMethod paymentMethod={paymentMethod} />
           )
         )}
       </div>

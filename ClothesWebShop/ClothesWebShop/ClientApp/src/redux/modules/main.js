@@ -1,7 +1,7 @@
 const ADD_ARTICLE_TO_BASKET = "ADD_ARTICLE_TO_BASKET";
 const ADD_ARTICLE = "ADD_ARTICLE";
 const ADD_ARTICLES = "ADD_ARTICLES";
-const ADD_USER = "ADD_USER";
+const ATTACH_USER = "ATTACH_USER";
 
 const initialState = {
   user: null,
@@ -31,10 +31,9 @@ export const addArticleToBasket = (article) => {
   };
 };
 
-export const addUser = (user) => {
-  console.log(user);
+export const attachUser = (user) => {
   return {
-    type: ADD_USER,
+    type: ATTACH_USER,
     payload: user,
   };
 };
@@ -43,10 +42,6 @@ var article, articles, basket, user, isAlreadyInBasket;
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_USER:
-      console.log(action.type);
-      user = action.payload;
-      return { ...state, user };
     case ADD_ARTICLE:
       article = action.payload;
       return { ...state, article };
@@ -58,7 +53,7 @@ const reducer = (state = initialState, action) => {
       article = action.payload;
       isAlreadyInBasket = false;
       // DOESN'T WORK
-      basket.map((element) => {
+      basket.forEach((element) => {
         if (element.id === article.id) {
           element.ammountInBasket += article.ammountInBasket;
           isAlreadyInBasket = true;
@@ -68,6 +63,9 @@ const reducer = (state = initialState, action) => {
         basket.push(article);
       }
       return { ...state, basket };
+    case ATTACH_USER:
+      user = action.payload;
+      return { ...state, user };
     default:
       return { ...state };
   }
