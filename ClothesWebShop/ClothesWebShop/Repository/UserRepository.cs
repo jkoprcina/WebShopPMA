@@ -1,5 +1,6 @@
 ﻿using ClothesWebShop.Data;
 using ClothesWebShop.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace ClothesWebShop.Repository
@@ -15,7 +16,10 @@ namespace ClothesWebShop.Repository
 
         public User GetByEmailAndPassword(string email, string password)
         {
-            return _context.Users.FirstOrDefault(a => a.Email == email && a.Password == password);
+            return _context.Users
+                .Include(user => user.Addresses)
+                .Include(user => user.PaymentMethods)
+                .FirstOrDefault(user => user.Email == email && user.Password == password);
         }
 
         public User Create(User user)

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Login from "./Login";
 import Register from "./Register";
 import { getUser, createUser } from "../../apiRequests";
@@ -8,7 +8,7 @@ import store from "../../redux/store";
 import { addUser } from "../../redux/modules/main";
 import "./main.css";
 
-class LoginRegisterView extends Component {
+class LoginRegisterView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,8 +59,10 @@ class LoginRegisterView extends Component {
   };
 
   handleLogin = () => {
-    if (validateLogin(this.state.email, this.state.password)) {
-      getUser(this.state.email, this.state.password).then((user) => {
+    const { email, password } = this.state;
+    console.log("Email: " + email + "    password: " + password);
+    if (validateLogin(email, password)) {
+      getUser(email, password).then((user) => {
         if (user !== null) {
           addUser(user);
         }

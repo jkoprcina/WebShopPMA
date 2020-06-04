@@ -15,9 +15,9 @@ namespace ClothesWebShop.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetByEmailAndPassword(string password, string email)
+        public IActionResult GetByEmailAndPassword(string email, string password)
         {
-            var user = _userRepository.GetByEmailAndPassword(password, email);
+            var user = _userRepository.GetByEmailAndPassword(email, password);
             if (user == null)
             {
                 return Forbid();
@@ -27,7 +27,7 @@ namespace ClothesWebShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody]User user)
+        public IActionResult Create(User user)
         {
             var newUser = _userRepository.Create(user);
             if (newUser == null)

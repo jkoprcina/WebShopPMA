@@ -13,21 +13,21 @@ const initialState = {
 export const addArticle = (article) => {
   return {
     type: ADD_ARTICLE,
-    payload: { article },
+    payload: article,
   };
 };
 
 export const addArticles = (articles) => {
   return {
     type: ADD_ARTICLES,
-    payload: { articles },
+    payload: articles,
   };
 };
 
 export const addArticleToBasket = (article) => {
   return {
     type: ADD_ARTICLE_TO_BASKET,
-    payload: { article },
+    payload: article,
   };
 };
 
@@ -35,30 +35,30 @@ export const addUser = (user) => {
   console.log(user);
   return {
     type: ADD_USER,
-    payload: { user },
+    payload: user,
   };
 };
 
 var article, articles, basket, user, isAlreadyInBasket;
 
 const reducer = (state = initialState, action) => {
-    switch (action.type) {
+  switch (action.type) {
     case ADD_USER:
       console.log(action.type);
-      user = action.payload.user;
+      user = action.payload;
       return { ...state, user };
     case ADD_ARTICLE:
-      article = action.payload.article;
+      article = action.payload;
       return { ...state, article };
     case ADD_ARTICLES:
-      articles = action.payload.articles;
+      articles = action.payload;
       return { ...state, articles };
     case ADD_ARTICLE_TO_BASKET:
       basket = state.basket;
-      article = action.payload.article;
+      article = action.payload;
       isAlreadyInBasket = false;
       // DOESN'T WORK
-      basket.foreach((element) => {
+      basket.map((element) => {
         if (element.id === article.id) {
           element.ammountInBasket += article.ammountInBasket;
           isAlreadyInBasket = true;

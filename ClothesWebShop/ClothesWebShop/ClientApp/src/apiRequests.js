@@ -20,10 +20,11 @@ export const getArticles = () =>
       alert("Get articles failed");
     });
 
-export const getUser = (password, email) =>
+export const getUser = (email, password) =>
   axios
-    .get("api/users", { params: { password, email } })
+    .get("api/users", { params: { email, password } })
     .then((response) => {
+      console.log(response.data);
       return response.data;
     })
     .catch(() => {
@@ -33,7 +34,11 @@ export const getUser = (password, email) =>
 export const createUser = (firstName, lastName, username, email, password) =>
   axios
     .post("api/users", {
-      params: { firstName, lastName, username, email, password },
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
     })
     .then((response) => {
       return response.data;

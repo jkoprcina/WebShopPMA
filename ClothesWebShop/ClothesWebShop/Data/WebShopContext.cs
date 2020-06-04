@@ -2,6 +2,7 @@
 using ClothesWebShop.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System;
 
 namespace ClothesWebShop.Data
 {
@@ -111,12 +112,70 @@ namespace ClothesWebShop.Data
                 }
             };
 
+            var paymentMethods = new List<PaymentMethod>()
+            {
+                new PaymentMethod()
+                {
+                    Id = 1,
+                    HolderName = "JOSIP KOPRČINA",
+                    Number = "2222-5555-4444-3333",
+                    CVV = "000",
+                    ExpirationDate = new DateTime(),
+                    IsMainPaymentMethod = true,
+                    UserId = 1
+                },
+                new PaymentMethod()
+                {
+                    Id = 2,
+                    HolderName = "JOSIP",
+                    Number = "1111-1111-1111-1111",
+                    CVV = "111",
+                    ExpirationDate = new DateTime(),
+                    IsMainPaymentMethod = false,
+                    UserId = 1
+                }
+            };
+
+            var addresses = new List<Address>()
+            {
+                new Address()
+                {
+                    Id = 1,
+                    AddressNumber = 43,
+                    City = "Split",
+                    Country = "Croatia",
+                    PostalCode = "21000",
+                    ContactNumber = "0995556666",
+                    IsMainAddress = true,
+                    UserId = 1
+                },
+                new Address()
+                {
+                    Id = 2,
+                    AddressNumber = 22,
+                    City = "Zagreb",
+                    Country = "Croatia",
+                    PostalCode = "10000",
+                    ContactNumber = "0998887776",
+                    IsMainAddress = false,
+                    UserId = 1
+                }
+            };
+
             modelBuilder.Entity<Article>().HasData(
                 articles
             );
 
             modelBuilder.Entity<User>().HasData(
                 users
+            );
+
+            modelBuilder.Entity<Address>().HasData(
+                addresses
+            );
+
+            modelBuilder.Entity<PaymentMethod>().HasData(
+                paymentMethods
             );
         }
     }

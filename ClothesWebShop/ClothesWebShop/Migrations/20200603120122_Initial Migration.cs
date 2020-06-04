@@ -116,7 +116,8 @@ namespace ClothesWebShop.Migrations
                 name: "PaymentMethods",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     HolderName = table.Column<string>(nullable: true),
                     Number = table.Column<string>(nullable: true),
                     CVV = table.Column<string>(nullable: true),
@@ -180,6 +181,24 @@ namespace ClothesWebShop.Migrations
                 table: "Users",
                 columns: new[] { "Id", "Email", "FirstName", "LastName", "Password", "Username" },
                 values: new object[] { 1, "e", "Josip", "Koprcina", "p", "jkoprcina" });
+
+            migrationBuilder.InsertData(
+                table: "Addresses",
+                columns: new[] { "Id", "AddressNumber", "City", "ContactNumber", "Country", "IsMainAddress", "PostalCode", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 43, "Split", "0995556666", "Croatia", true, "21000", 1 },
+                    { 2, 22, "Zagreb", "0998887776", "Croatia", false, "10000", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PaymentMethods",
+                columns: new[] { "Id", "CVV", "ExpirationDate", "HolderName", "IsMainPaymentMethod", "Number", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "000", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "JOSIP KOPRČINA", true, "2222-5555-4444-3333", 1 },
+                    { 2, "111", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "JOSIP", false, "1111-1111-1111-1111", 1 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_UserId",

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClothesWebShop.Migrations
 {
     [DbContext(typeof(WebShopContext))]
-    [Migration("20200602133517_Initial-Migration")]
+    [Migration("20200603120122_Initial Migration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,30 @@ namespace ClothesWebShop.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddressNumber = 43,
+                            City = "Split",
+                            ContactNumber = "0995556666",
+                            Country = "Croatia",
+                            IsMainAddress = true,
+                            PostalCode = "21000",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddressNumber = 22,
+                            City = "Zagreb",
+                            ContactNumber = "0998887776",
+                            Country = "Croatia",
+                            IsMainAddress = false,
+                            PostalCode = "10000",
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("ClothesWebShop.Data.Models.Article", b =>
@@ -245,8 +269,10 @@ namespace ClothesWebShop.Migrations
 
             modelBuilder.Entity("ClothesWebShop.Data.Models.PaymentMethod", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CVV")
                         .HasColumnType("nvarchar(max)");
@@ -271,6 +297,28 @@ namespace ClothesWebShop.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("PaymentMethods");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CVV = "000",
+                            ExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HolderName = "JOSIP KOPRČINA",
+                            IsMainPaymentMethod = true,
+                            Number = "2222-5555-4444-3333",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CVV = "111",
+                            ExpirationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HolderName = "JOSIP",
+                            IsMainPaymentMethod = false,
+                            Number = "1111-1111-1111-1111",
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("ClothesWebShop.Data.Models.User", b =>
