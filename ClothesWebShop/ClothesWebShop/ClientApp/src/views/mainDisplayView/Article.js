@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "reactstrap";
 import { Link } from "react-router-dom";
-import "./css/article.css";
 
 const Article = (props) => {
   return (
@@ -10,7 +9,9 @@ const Article = (props) => {
       className="text-dark"
       to={`/article/${props.article.id}`}
     >
-      <div className="article">Article</div>
+      <div className="article">
+        <img src={require("../../images/shirt.jpg")} alt="Article" />
+      </div>
     </NavLink>
   );
 };

@@ -5,7 +5,7 @@ import { getArticles } from "../../apiRequests";
 import { connect } from "react-redux";
 import { addArticles } from "../../redux/modules/main";
 import store from "../../redux/store";
-import "./css/main.css";
+import "../../css/mainDisplay.css";
 
 class MainDisplayView extends React.Component {
   updateStateFromStore = () => {
@@ -31,7 +31,7 @@ class MainDisplayView extends React.Component {
 
   render() {
     return (
-      <div className="mainDisplayView">
+      <div className="main-display-view">
         <Filter />
         {this.props.articles === [] ? (
           <div></div>

@@ -1,6 +1,5 @@
 import React from "react";
 import Article from "./Article";
-import "./css/display.css";
 
 const Display = (props) => {
   return (

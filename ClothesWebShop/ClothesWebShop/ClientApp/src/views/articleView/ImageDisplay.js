@@ -1,7 +1,10 @@
 import React from "react";
-import "./css/imageDisplay.css";
 
 const ImageDisplay = (props) => {
-  return <div className="image-display">Image Display</div>;
+  return (
+    <div className="image-display">
+      <img src={require("../../images/shirt.jpg")} alt="Man in Shirt" />
+    </div>
+  );
 };
 export default ImageDisplay;

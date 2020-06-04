@@ -6,7 +6,7 @@ import { validateLogin, validateRegister } from "../../validations";
 import { connect } from "react-redux";
 import store from "../../redux/store";
 import { attachUser } from "../../redux/modules/main";
-import "./main.css";
+import "../../css/loginRegister.css";
 
 class LoginRegisterView extends React.Component {
   constructor(props) {
@@ -75,9 +75,9 @@ class LoginRegisterView extends React.Component {
       getUser(email, password).then((user) => {
         if (user !== null) {
           this.props.attachUser(user);
+          this.goToMainPage();
         }
       });
-      this.goToMainPage();
     } else {
       console.log(handleLoginError);
     }
@@ -97,10 +97,10 @@ class LoginRegisterView extends React.Component {
         (user) => {
           if (user !== null) {
             this.props.attachUser(user);
+            this.goToMainPage();
           }
         }
       );
-      this.goToMainPage();
     } else {
       console.log(handleRegisterError);
     }

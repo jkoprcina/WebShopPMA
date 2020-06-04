@@ -5,7 +5,7 @@ import { getArticle } from "../../apiRequests";
 import { connect } from "react-redux";
 import store from "../../redux/store";
 import { addArticleToBasket, addArticle } from "../../redux/modules/main";
-import "./css/articleView.css";
+import "../../css/article.css";
 
 class ArticleView extends React.Component {
   updateStateFromStore = () => {

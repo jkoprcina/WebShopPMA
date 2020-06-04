@@ -1,0 +1,30 @@
+.main-display-view {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid green;
+  border-radius: 5px;
+}
+
+.article {
+  width: 250px;
+  height: 320px;
+  margin: 2px;
+}
+
+.display {
+  width: 80%;
+  margin: 15px 0;
+  padding: 15px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.filter {
+  width: 20%;
+  margin: 30px 0 30px 30px;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+}

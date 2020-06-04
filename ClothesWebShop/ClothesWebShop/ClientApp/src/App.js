@@ -4,7 +4,7 @@ import ArticleView from "./views/articleView/ArticleView";
 import BasketView from "./views/basketView/BasketView";
 import LoginRegisterView from "./views/loginRegisterView/LoginRegisterView";
 import MainDisplayView from "./views/mainDisplayView/MainDisplayView";
-import { BrowserRouter, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { Layout } from "./views/Layout";
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -13,14 +13,12 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <BrowserRouter>
-          <Layout>
-            <Route path="/article/:id" component={ArticleView} />
-            <Route path="/basket" component={BasketView} />
-            <Route path="/login" component={LoginRegisterView} />
-            <Route exact path="/" component={MainDisplayView} />
-          </Layout>
-        </BrowserRouter>
+        <Layout>
+          <Route path="/article/:id" component={ArticleView} />
+          <Route path="/basket" component={BasketView} />
+          <Route path="/login" component={LoginRegisterView} />
+          <Route exact path="/" component={MainDisplayView} />
+        </Layout>
       </Provider>
     );
   }
