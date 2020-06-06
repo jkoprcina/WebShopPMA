@@ -78,6 +78,8 @@ class LoginRegisterView extends React.Component {
         if (user !== null) {
           this.props.attachUser(user);
           this.goToMainPage();
+        } else {
+          this.setState({ loginError: "No user with that data exists" });
         }
       });
     } else {
@@ -86,13 +88,21 @@ class LoginRegisterView extends React.Component {
   };
 
   handleRegister = () => {
-    const { firstName, lastName, username, email, password } = this.state;
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      passwordRepeat,
+    } = this.state;
     let handleRegisterError = validateRegister(
       firstName,
       lastName,
       username,
       email,
-      password
+      password,
+      passwordRepeat
     );
     if (handleRegisterError === "none") {
       createUser(firstName, lastName, username, email, password).then(
@@ -100,6 +110,8 @@ class LoginRegisterView extends React.Component {
           if (user !== null) {
             this.props.attachUser(user);
             this.goToMainPage();
+          } else if (user === undefined) {
+            this.setState({ registerError: "Input is not valid" });
           }
         }
       );

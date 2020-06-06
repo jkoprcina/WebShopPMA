@@ -27,7 +27,7 @@ export const getUser = (email, password) =>
       return response.data;
     })
     .catch(() => {
-      alert("Get user failed");
+      return null;
     });
 
 export const createUser = (firstName, lastName, username, email, password) =>

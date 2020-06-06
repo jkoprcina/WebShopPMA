@@ -64,6 +64,7 @@ const reducer = (state = initialState, action) => {
       }
       return { ...state, basket };
     case ATTACH_USER:
+      console.log("HEY");
       user = action.payload;
       return { ...state, user };
     default:
