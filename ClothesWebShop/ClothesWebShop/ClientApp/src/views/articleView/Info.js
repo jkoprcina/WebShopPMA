@@ -6,7 +6,7 @@ const Info = (props) => {
       <h1>{props.article.name}</h1>
       <p>Short description: {props.article.description}</p>
       <p>Price: {props.article.price} €</p>
-      <p>Ammount available: {props.article.ammountAvailable}</p>
+      <p>Ammount available: {props.article.amountAvailable}</p>
       <button onClick={props.addToBasket}>Add To Basket</button>
     </div>
   );

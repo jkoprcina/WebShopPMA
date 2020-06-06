@@ -23,15 +23,6 @@ namespace ClothesWebShop.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var brands = new List<Brand>()
-            {
-                new Brand()
-                {
-                    Id = 1,
-                    Name = "Nike"
-                },
-            };
-
             var articles = new List<Article>()
             {
                 new Article()
@@ -177,9 +168,14 @@ namespace ClothesWebShop.Data
                 }
             };
 
-            modelBuilder.Entity<Article>().HasData(
-                brands
-            );
+            var brands = new List<Brand>()
+            {
+                new Brand()
+                {
+                    Id = 1,
+                    Name = "Nike",
+                }
+            };
 
             modelBuilder.Entity<Article>().HasData(
                 articles
@@ -187,6 +183,10 @@ namespace ClothesWebShop.Data
 
             modelBuilder.Entity<User>().HasData(
                 users
+            );
+
+            modelBuilder.Entity<Brand>().HasData(
+                brands
             );
 
             modelBuilder.Entity<Address>().HasData(

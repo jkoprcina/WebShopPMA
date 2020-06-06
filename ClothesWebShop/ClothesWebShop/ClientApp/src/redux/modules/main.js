@@ -55,7 +55,7 @@ const reducer = (state = initialState, action) => {
       // DOESN'T WORK
       basket.forEach((element) => {
         if (element.id === article.id) {
-          element.ammountInBasket += article.ammountInBasket;
+          element.amountInBasket += article.amountInBasket;
           isAlreadyInBasket = true;
         }
       });

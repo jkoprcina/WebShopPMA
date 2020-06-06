@@ -19,6 +19,8 @@ class LoginRegisterView extends React.Component {
       email: "",
       password: "",
       passwordRepeat: "",
+      loginError: "",
+      registerError: "",
     };
   }
 
@@ -79,7 +81,7 @@ class LoginRegisterView extends React.Component {
         }
       });
     } else {
-      console.log(handleLoginError);
+      this.setState({ loginError: handleLoginError });
     }
   };
 
@@ -102,7 +104,7 @@ class LoginRegisterView extends React.Component {
         }
       );
     } else {
-      console.log(handleRegisterError);
+      this.setState({ registerError: handleRegisterError });
     }
   };
 
@@ -151,6 +153,8 @@ class LoginRegisterView extends React.Component {
       username,
       password,
       passwordRepeat,
+      loginError,
+      registerError,
     } = this.state;
     return (
       <div className="login-register-view">
@@ -158,6 +162,7 @@ class LoginRegisterView extends React.Component {
           <Login
             email={email}
             password={password}
+            loginError={loginError}
             updateEmailValue={this.handleUpdateEmailValue}
             updatePasswordValue={this.handleUpdatePasswordValue}
             login={this.handleLogin}
@@ -171,6 +176,7 @@ class LoginRegisterView extends React.Component {
             username={username}
             password={password}
             passwordRepeat={passwordRepeat}
+            registerError={registerError}
             updateFirstNameValue={this.handleUpdateFirstNameValue}
             updateLastNameValue={this.handleUpdateLastNameValue}
             updateEmailValue={this.handleUpdateEmailValue}

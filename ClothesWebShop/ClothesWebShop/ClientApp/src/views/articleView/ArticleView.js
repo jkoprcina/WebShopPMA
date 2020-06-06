@@ -36,7 +36,7 @@ class ArticleView extends React.Component {
       this.props.history.push("/login");
     } else {
       let article = this.props.article;
-      article.ammountInBasket = 1;
+      article.amountInBasket = 1;
       this.props.addArticleToBasket(this.props.article);
     }
   };
