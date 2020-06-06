@@ -1,35 +1,17 @@
-.login-registration {
+.login-register-view {
   width: 400px;
   height: 400px;
-  margin: 200px auto;
+  margin: 100px auto;
   border-radius: 25px;
   padding: 20px;
   background-color: #f2f2f2;
 }
 
-.login-registration__nav {
-  padding: 20px 0 30px 0;
-  text-align: center;
-}
-.login-registration__nav__label {
-  padding: 10px 20px;
-  margin: 0 10px;
-  background-color: #4caf50;
-  border-radius: 10px;
-  color: white;
+input {
+  margin: 5px auto;
+  padding: 2px;
 }
 
-#login {
-  text-align: right;
-}
-
-#register {
-  text-align: left;
-}
-.login-registration__nav__label:hover {
-  cursor: pointer;
-}
-.login-registration__form {
-  display: flex;
-  flex-direction: column;
+.login-register-view__login {
+  margin: auto;
 }

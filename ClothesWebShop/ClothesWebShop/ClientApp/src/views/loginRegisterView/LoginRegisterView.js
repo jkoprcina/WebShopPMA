@@ -153,8 +153,7 @@ class LoginRegisterView extends React.Component {
       passwordRepeat,
     } = this.state;
     return (
-      <div className="main">
-        {" "}
+      <div className="login-register-view">
         {isLogin ? (
           <Login
             email={email}
@@ -181,7 +180,7 @@ class LoginRegisterView extends React.Component {
             register={this.handleRegister}
             changeToLoginPage={this.handleChangeToLoginPage}
           />
-        )}{" "}
+        )}
       </div>
     );
   }

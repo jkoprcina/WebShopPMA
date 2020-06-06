@@ -1,8 +1,8 @@
-﻿using ClothesWebShop.Data.Models;
-using ClothesWebShop.Data.Enums;
+﻿using ClothesWebShop.Data.Enums;
+using ClothesWebShop.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 namespace ClothesWebShop.Data
 {
@@ -23,6 +23,15 @@ namespace ClothesWebShop.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var brands = new List<Brand>()
+            {
+                new Brand()
+                {
+                    Id = 1,
+                    Name = "Nike"
+                },
+            };
+
             var articles = new List<Article>()
             {
                 new Article()
@@ -34,8 +43,9 @@ namespace ClothesWebShop.Data
                     Description = "A plain shirt",
                     Category = "Plain",
                     Color = "Green",
-                    AmmountAvailable = 5,
+                    AmountAvailable = 5,
                     SaleReduction = 0,
+                    BrandId = 1,
                 },
                 new Article()
                 {
@@ -46,8 +56,9 @@ namespace ClothesWebShop.Data
                     Description = "A plain shirt",
                     Category = "Plain",
                     Color = "Green",
-                    AmmountAvailable = 5,
+                    AmountAvailable = 5,
                     SaleReduction = 0,
+                    BrandId = 1,
                 },
                 new Article()
                 {
@@ -58,8 +69,9 @@ namespace ClothesWebShop.Data
                     Description = "A plain shirt",
                     Category = "Plain",
                     Color = "Green",
-                    AmmountAvailable = 10,
+                    AmountAvailable = 10,
                     SaleReduction = 0,
+                    BrandId = 1,
                 },
                 new Article()
                 {
@@ -70,8 +82,9 @@ namespace ClothesWebShop.Data
                     Description = "A plain shirt",
                     Category = "Plain",
                     Color = "Green",
-                    AmmountAvailable = 10,
+                    AmountAvailable = 10,
                     SaleReduction = 0,
+                    BrandId = 1,
                 },
                 new Article()
                 {
@@ -82,8 +95,9 @@ namespace ClothesWebShop.Data
                     Description = "A plain shirt",
                     Category = "Plain",
                     Color = "Green",
-                    AmmountAvailable = 10,
+                    AmountAvailable = 10,
                     SaleReduction = 0,
+                    BrandId = 1,
                 },
                 new Article()
                 {
@@ -94,8 +108,9 @@ namespace ClothesWebShop.Data
                     Description = "A plain shirt",
                     Category = "Plain",
                     Color = "Green",
-                    AmmountAvailable = 10,
+                    AmountAvailable = 10,
                     SaleReduction = 0,
+                    BrandId = 1,
                 }
             };
 
@@ -161,6 +176,10 @@ namespace ClothesWebShop.Data
                     UserId = 1
                 }
             };
+
+            modelBuilder.Entity<Article>().HasData(
+                brands
+            );
 
             modelBuilder.Entity<Article>().HasData(
                 articles
