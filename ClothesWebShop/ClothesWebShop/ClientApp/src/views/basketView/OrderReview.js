@@ -1,6 +1,6 @@
 import React from "react";
 
-const MainAddress = (props) => {
+const OrderReview = (props) => {
   return (
     <div className="main">
       <b>
@@ -19,4 +19,4 @@ const MainAddress = (props) => {
     </div>
   );
 };
-export default MainAddress;
+export default OrderReview;

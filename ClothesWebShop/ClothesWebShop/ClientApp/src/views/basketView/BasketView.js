@@ -5,6 +5,7 @@ import MainPaymentMethod from "./MainPaymentMethod";
 import PaymentMethod from "./PaymentMethod";
 import { connect } from "react-redux";
 import store from "../../redux/store";
+import "../../css/basket.css";
 
 class BasketView extends React.Component {
   updateStateFromStore = () => {
@@ -16,11 +17,11 @@ class BasketView extends React.Component {
 
   componentWillMount() {
     if (this.props.user === null) {
-      console.log(this.props.user);
       this.props.history.push("/");
       this.props.history.go("/");
     }
   }
+
   componentDidMount() {
     this.unsubscribeStore = store.subscribe(this.updateStateFromStore);
   }
@@ -30,20 +31,70 @@ class BasketView extends React.Component {
   }
 
   render() {
+    const user = this.props.user;
     return (
-      <div>
-        <MainAddress />
-        {this.props.user.adresses.map((address) =>
-          address.isMainAddress ? <div></div> : <Address address={address} />
-        )}
-        <MainPaymentMethod />
-        {this.props.user.paymentMethods.map((paymentMethod) =>
-          paymentMethod.isMainPaymentMethod ? (
-            <div></div>
-          ) : (
-            <PaymentMethod paymentMethod={paymentMethod} />
-          )
-        )}
+      <div className="basket-view">
+        <div className="left">
+          <div className="window">
+            <h3>Shipping Information</h3>
+            {user.addresses === null ? (
+              <div></div>
+            ) : (
+              user.addresses.map((address, index) =>
+                address.isMainAddress ? (
+                  <MainAddress address={address} user={user} key={index} />
+                ) : (
+                  <div></div>
+                )
+              )
+            )}
+            <div className="addresses">
+              {user.addresses === null ? (
+                <div></div>
+              ) : (
+                user.addresses.map((address, index) =>
+                  address.isMainAddress ? (
+                    <div></div>
+                  ) : (
+                    <Address address={address} key={index} />
+                  )
+                )
+              )}
+            </div>
+          </div>
+          <div className="window">
+            <h3>Payment Methods</h3>
+            {user.paymentMethods === null ? (
+              <div></div>
+            ) : (
+              user.paymentMethods.map((paymentMethod, index) =>
+                paymentMethod.isMainPaymentMethod ? (
+                  <MainPaymentMethod
+                    paymentMethod={paymentMethod}
+                    key={index}
+                  />
+                ) : (
+                  <div></div>
+                )
+              )
+            )}
+            <div className="payment-methods">
+              {user.paymentMethods === null ? (
+                <div></div>
+              ) : (
+                user.paymentMethods.map((paymentMethod, index) =>
+                  paymentMethod.isMainPaymentMethod ? (
+                    <div></div>
+                  ) : (
+                    <PaymentMethod paymentMethod={paymentMethod} key={index} />
+                  )
+                )
+              )}
+            </div>
+          </div>
+          <div className="order-review"></div>
+        </div>
+        <div className="right"></div>
       </div>
     );
   }

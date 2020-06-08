@@ -1,0 +1,44 @@
+.basket-view {
+  padding: 20px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.basket-view .left {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+.window {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+}
+
+.basket-view .main {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  margin: 20px;
+  font-size: 18px;
+}
+
+.basket-view .addresses {
+  width: 80%;
+  padding: 20px;
+  font-size: 14px;
+}
+
+.basket-view .payment-methods {
+  width: 80%;
+  padding: 20px;
+  font-size: 14px;
+}
+
+.basket-view h3 {
+  margin-left: 20px;
+  font-size: 16px;
+  font-weight: 400;
+}

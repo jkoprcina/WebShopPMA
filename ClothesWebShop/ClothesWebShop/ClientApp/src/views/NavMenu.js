@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import {} from "../redux/modules/main";
 import "./NavMenu.css";
 
-const NavMenu = (user) => {
+const NavMenu = (props) => {
   return (
     <header>
       <Navbar
@@ -32,18 +32,23 @@ const NavMenu = (user) => {
                   Home
                 </NavLink>
               </NavItem>
-              {user === null ? (
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/basket">
-                    Basket
-                  </NavLink>
-                </NavItem>
-              ) : (
+              {props.user === null ? (
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/login">
                     Login/Register
                   </NavLink>
                 </NavItem>
+              ) : (
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/basket">
+                    Basket
+                  </NavLink>
+                </NavItem>
+              )}
+              {props.user === null ? (
+                <div></div>
+              ) : (
+                <span>{props.user.username}</span>
               )}
             </ul>
           </Collapse>

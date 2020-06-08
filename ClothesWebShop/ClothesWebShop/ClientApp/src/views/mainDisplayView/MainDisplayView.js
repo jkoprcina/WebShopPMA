@@ -1,9 +1,9 @@
 import React from "react";
 import Display from "./Display";
 import Filter from "./Filter";
-import { getArticles } from "../../apiRequests";
+import { getArticles, getUser } from "../../apiRequests";
 import { connect } from "react-redux";
-import { addArticles } from "../../redux/modules/main";
+import { addArticles, attachUser } from "../../redux/modules/main";
 import store from "../../redux/store";
 import "../../css/mainDisplay.css";
 
@@ -23,6 +23,9 @@ class MainDisplayView extends React.Component {
         }
       });
     }
+    getUser("e", "p").then((user) => {
+      this.props.attachUser(user);
+    });
   }
 
   componentWillUnmount() {
@@ -47,6 +50,6 @@ const mapStateToProps = (state) => ({
   articles: state.main.articles,
 });
 
-const mapDispatchToProps = { addArticles };
+const mapDispatchToProps = { addArticles, attachUser };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainDisplayView);

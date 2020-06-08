@@ -6,9 +6,14 @@ namespace ClothesWebShop.Data.Models
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Name is required"),
+            StringLength(50, MinimumLength = 3,
+            ErrorMessage = "The name must be between 3 and 50 characters")]
+        public string Name { get; set; }
+
         [Required(ErrorMessage = "Address number is required"),
             Range(0, int.MaxValue)]
-        public int AddressNumber { get; set; }
+        public int Number { get; set; }
 
         [Required(ErrorMessage = "City is required"),
             StringLength(50, MinimumLength = 3,

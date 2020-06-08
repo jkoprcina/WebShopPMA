@@ -139,6 +139,26 @@ namespace ClothesWebShop.Data
                     ExpirationDate = new DateTime(),
                     IsMainPaymentMethod = false,
                     UserId = 1
+                },
+                new PaymentMethod()
+                {
+                    Id = 3,
+                    HolderName = "JOSIP KOPRČINA",
+                    Number = "9999-8888-7777-6666",
+                    CVV = "999",
+                    ExpirationDate = new DateTime(),
+                    IsMainPaymentMethod = false,
+                    UserId = 1
+                },
+                new PaymentMethod()
+                {
+                    Id = 4,
+                    HolderName = "JOSIP",
+                    Number = "1111-2222-4444-8888",
+                    CVV = "222",
+                    ExpirationDate = new DateTime(),
+                    IsMainPaymentMethod = false,
+                    UserId = 1
                 }
             };
 
@@ -147,7 +167,8 @@ namespace ClothesWebShop.Data
                 new Address()
                 {
                     Id = 1,
-                    AddressNumber = 43,
+                    Name = "Tolstojeva",
+                    Number = 43,
                     City = "Split",
                     Country = "Croatia",
                     PostalCode = "21000",
@@ -158,7 +179,32 @@ namespace ClothesWebShop.Data
                 new Address()
                 {
                     Id = 2,
-                    AddressNumber = 22,
+                    Name = "Busiceva",
+                    Number = 22,
+                    City = "Zagreb",
+                    Country = "Croatia",
+                    PostalCode = "10000",
+                    ContactNumber = "0998887776",
+                    IsMainAddress = false,
+                    UserId = 1
+                },
+                new Address()
+                {
+                    Id = 3,
+                    Name = "Tolstojeva",
+                    Number = 2,
+                    City = "Split",
+                    Country = "Croatia",
+                    PostalCode = "21000",
+                    ContactNumber = "0995556666",
+                    IsMainAddress = false,
+                    UserId = 1
+                },
+                new Address()
+                {
+                    Id = 4,
+                    Name = "Busiceva",
+                    Number = 1,
                     City = "Zagreb",
                     Country = "Croatia",
                     PostalCode = "10000",
