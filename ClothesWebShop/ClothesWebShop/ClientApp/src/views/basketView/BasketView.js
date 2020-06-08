@@ -2,6 +2,7 @@ import React from "react";
 import Address from "./Address";
 import MainAddress from "./MainAddress";
 import MainPaymentMethod from "./MainPaymentMethod";
+import Order from "./Order";
 import PaymentMethod from "./PaymentMethod";
 import { connect } from "react-redux";
 import store from "../../redux/store";
@@ -92,7 +93,16 @@ class BasketView extends React.Component {
               )}
             </div>
           </div>
-          <div className="order-review"></div>
+          <div className="window">
+            <h2>Order Review</h2>
+            {this.props.basket === null ? (
+              <div></div>
+            ) : (
+              this.props.basket.map((article, index) => (
+                <Order article={article} key={index} />
+              ))
+            )}
+          </div>
         </div>
         <div className="right"></div>
       </div>
