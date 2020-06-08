@@ -14,7 +14,19 @@ namespace ClothesWebShop.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet]
+        [HttpGet("by-id")]
+        public IActionResult GetByEmailAndPassword(int id)
+        {
+            var user = _userRepository.GetById(id);
+            if (user == null)
+            {
+                return Forbid();
+            }
+
+            return Ok(user);
+        }
+
+        [HttpGet("by-username-password")]
         public IActionResult GetByEmailAndPassword(string email, string password)
         {
             var user = _userRepository.GetByEmailAndPassword(email, password);
@@ -36,6 +48,12 @@ namespace ClothesWebShop.Controllers
             }
 
             return Ok(newUser);
+        }
+
+        [HttpPost("add-article-to-basket")]
+        public IActionResult AddArticleToBasket(Article article, int userId)
+        {
+            return Ok(_userRepository.AddArticleToBasket(article, userId));
         }
     }
 }

@@ -1,55 +1,38 @@
 import React from "react";
 import Display from "./Display";
 import Filter from "./Filter";
-import { getArticles, getUser } from "../../apiRequests";
-import { connect } from "react-redux";
-import { addArticles, attachUser } from "../../redux/modules/main";
-import store from "../../redux/store";
+import { getArticles, getUserById } from "../../apiRequests";
 import "../../css/mainDisplay.css";
 
-class MainDisplayView extends React.Component {
-  updateStateFromStore = () => {
-    const currentState = this.props.articles;
-    if (this.state !== currentState) {
-      this.setState(currentState);
-    }
-  };
+export class MainDisplayView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      articles: null,
+      user: null,
+    };
+  }
+
   componentDidMount() {
-    this.unsubscribeStore = store.subscribe(this.updateStateFromStore);
-    if (this.props.articles.length === 0) {
+    if (this.state.articles === null) {
       getArticles().then((articles) => {
         if (articles !== undefined) {
-          this.props.addArticles(articles);
+          this.setState({ articles });
         }
       });
     }
-    getUser("e", "p").then((user) => {
-      this.props.attachUser(user);
+    getUserById(1).then((user) => {
+      this.setState({ user });
     });
   }
 
-  componentWillUnmount() {
-    this.unsubscribeStore();
-  }
-
   render() {
+    const { articles } = this.state;
     return (
       <div className="main-display-view">
         <Filter />
-        {this.props.articles === [] ? (
-          <div></div>
-        ) : (
-          <Display articles={this.props.articles} />
-        )}
+        {articles === null ? <div></div> : <Display articles={articles} />}
       </div>
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-  articles: state.main.articles,
-});
-
-const mapDispatchToProps = { addArticles, attachUser };
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainDisplayView);

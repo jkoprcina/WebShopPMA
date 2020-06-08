@@ -34,6 +34,10 @@ namespace ClothesWebShop.Data.Models
         public int AmountAvailable { get; set; }
         public int SaleReduction { get; set; }
 
+        [Required(ErrorMessage = "Amount available is required"),
+            Range(0, int.MaxValue)]
+        public int AmountSelected { get; set; }
+
         [Required]
         public int BrandId { get; set; }
         public Brand Brand { get; set; }

@@ -20,9 +20,19 @@ export const getArticles = () =>
       alert("Get articles failed");
     });
 
-export const getUser = (email, password) =>
+export const getUserByUsernamePassword = (email, password) =>
   axios
-    .get("api/users", { params: { email, password } })
+    .get("api/users/by-username-password", { params: { email, password } })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return null;
+    });
+
+export const getUserById = (id) =>
+  axios
+    .get("api/users/by-id", { params: { id } })
     .then((response) => {
       return response.data;
     })
@@ -44,4 +54,18 @@ export const createUser = (firstName, lastName, username, email, password) =>
     })
     .catch(() => {
       alert("Add user failed");
+      return null;
+    });
+
+export const addArticleToBasket = (article, userId) =>
+  axios
+    .post("api/users/add-article-to-basket", {
+      article,
+      userId,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      alert("Add article to basket failed");
     });

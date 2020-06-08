@@ -1,14 +1,12 @@
 import React from "react";
 import Login from "./Login";
 import Register from "./Register";
-import { getUser, createUser } from "../../apiRequests";
+import { getUserByUsernamePassword, createUser } from "../../apiRequests";
 import { validateLogin, validateRegister } from "../../validations";
-import { connect } from "react-redux";
-import store from "../../redux/store";
-import { attachUser } from "../../redux/modules/main";
 import "../../css/loginRegister.css";
+import { setCookie } from "../../cookie";
 
-class LoginRegisterView extends React.Component {
+export class LoginRegisterView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,21 +33,6 @@ class LoginRegisterView extends React.Component {
     });
   };
 
-  updateStateFromStore = () => {
-    const currentState = this.props.user;
-    if (this.state !== currentState) {
-      this.setState(currentState);
-    }
-  };
-
-  componentDidMount() {
-    this.unsubscribeStore = store.subscribe(this.updateStateFromStore);
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeStore();
-  }
-
   handleChangeToLoginPage = () => {
     this.setState({
       isLogin: true,
@@ -74,9 +57,9 @@ class LoginRegisterView extends React.Component {
     const { email, password } = this.state;
     let handleLoginError = validateLogin(email, password);
     if (handleLoginError === "none") {
-      getUser(email, password).then((user) => {
+      getUserByUsernamePassword(email, password).then((user) => {
         if (user !== null) {
-          this.props.attachUser(user);
+          setCookie("id", user.id);
           this.goToMainPage();
         } else {
           this.setState({ loginError: "No user with that data exists" });
@@ -108,7 +91,7 @@ class LoginRegisterView extends React.Component {
       createUser(firstName, lastName, username, email, password).then(
         (user) => {
           if (user !== null) {
-            this.props.attachUser(user);
+            setCookie("id", user.id);
             this.goToMainPage();
           } else if (user === undefined) {
             this.setState({ registerError: "Input is not valid" });
@@ -203,13 +186,3 @@ class LoginRegisterView extends React.Component {
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-  user: state.main.user,
-});
-
-const mapDispatchToProps = {
-  attachUser,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginRegisterView);

@@ -4,35 +4,37 @@ import MainAddress from "./MainAddress";
 import MainPaymentMethod from "./MainPaymentMethod";
 import Order from "./Order";
 import PaymentMethod from "./PaymentMethod";
-import { connect } from "react-redux";
-import store from "../../redux/store";
+import { getCookie } from "../../cookie";
+import { getUserById } from "../../apiRequests";
 import "../../css/basket.css";
 
-class BasketView extends React.Component {
-  updateStateFromStore = () => {
-    const currentState = this.props.basket;
-    if (this.state !== currentState) {
-      this.setState(currentState);
-    }
-  };
-
+export class BasketView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {
+        addresses: null,
+        paymentMethods: null,
+        basket: null,
+      },
+    };
+  }
   componentWillMount() {
-    if (this.props.user === null) {
-      this.props.history.push("/");
-      this.props.history.go("/");
+    let id = getCookie("id");
+    if (id !== null) {
+      getUserById(id).then((user) => {
+        if (user === null) {
+          this.props.history.push("/");
+          this.props.history.go("/");
+        } else {
+          this.setState({ user });
+        }
+      });
     }
-  }
-
-  componentDidMount() {
-    this.unsubscribeStore = store.subscribe(this.updateStateFromStore);
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeStore();
   }
 
   render() {
-    const user = this.props.user;
+    const { user } = this.state;
     return (
       <div className="basket-view">
         <div className="left">
@@ -95,10 +97,10 @@ class BasketView extends React.Component {
           </div>
           <div className="window">
             <h2>Order Review</h2>
-            {this.props.basket === null ? (
+            {user.basket === null ? (
               <div></div>
             ) : (
-              this.props.basket.map((article, index) => (
+              user.basket.map((article, index) => (
                 <Order article={article} key={index} />
               ))
             )}
@@ -109,12 +111,3 @@ class BasketView extends React.Component {
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-  basket: state.main.basket,
-  user: state.main.user,
-});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BasketView);
