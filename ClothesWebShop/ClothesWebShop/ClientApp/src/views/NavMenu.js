@@ -29,6 +29,7 @@ export class NavMenu extends React.Component {
       });
     }
   }
+
   render() {
     const { user } = this.state;
     return (

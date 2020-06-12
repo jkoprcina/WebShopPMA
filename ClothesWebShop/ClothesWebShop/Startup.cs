@@ -32,6 +32,8 @@ namespace ClothesWebShop
 
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddMvc().AddNewtonsoftJson(options =>
             {

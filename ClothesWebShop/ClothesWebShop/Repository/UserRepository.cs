@@ -19,7 +19,8 @@ namespace ClothesWebShop.Repository
             return _context.Users
                 .Include(user => user.Addresses)
                 .Include(user => user.PaymentMethods)
-                .Include(user => user.Basket)
+                .Include(user => user.Baskets)
+                    .ThenInclude(basket => basket.Article)
                 .FirstOrDefault(user => user.Id == id);
 
         }
@@ -28,35 +29,18 @@ namespace ClothesWebShop.Repository
             return _context.Users
                 .Include(user => user.Addresses)
                 .Include(user => user.PaymentMethods)
-                .Include(user => user.Basket)
+                .Include(user => user.Baskets)
+                    .ThenInclude(basket => basket.Article)
                 .FirstOrDefault(user => user.Email == email && user.Password == password);
         }
 
         public User Create(User user)
         {
-            if (ValidateUser(user))
-            {
-                _context.Users.Add(user);
-                _context.SaveChanges();
-
-                return GetByEmailAndPassword(user.Email, user.Password);
-            }
-            return null;
-        }
-
-        public bool AddArticleToBasket(Article article, int userId)
-        {
-            var user = _context.Users.FirstOrDefault(user => user.Id == userId);
-            if (user == null)
-                return false;
-
-            user.Basket.Add(article);
+            _context.Users.Add(user);
             _context.SaveChanges();
-            return true;
+
+            return GetByEmailAndPassword(user.Email, user.Password);
         }
-        private bool ValidateUser(User user) 
-        {
-            return true;
-        }
+
     }
 }

@@ -57,15 +57,42 @@ export const createUser = (firstName, lastName, username, email, password) =>
       return null;
     });
 
-export const addArticleToBasket = (article, userId) =>
+export const addArticleToBasket = (articleId, userId, amountSelected, price) =>
   axios
-    .post("api/users/add-article-to-basket", {
-      article,
+    .post("api/baskets/add", {
+      articleId,
       userId,
+      amountSelected,
+      price,
     })
     .then((response) => {
       return response.data;
     })
     .catch(() => {
-      alert("Add article to basket failed");
+      alert("Add basket failed");
+    });
+
+export const deleteBasket = (basketId) =>
+  axios
+    .delete("api/baskets/delete", { params: { basketId } })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      alert("Delete basket to basket failed");
+    });
+
+export const addOrder = (articleId, userId, amountSelected, price) =>
+  axios
+    .post("api/orders", {
+      articleId,
+      userId,
+      amountSelected,
+      price,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      alert("Add order failed");
     });

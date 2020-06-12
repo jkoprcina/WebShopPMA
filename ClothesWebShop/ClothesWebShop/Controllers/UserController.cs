@@ -49,11 +49,5 @@ namespace ClothesWebShop.Controllers
 
             return Ok(newUser);
         }
-
-        [HttpPost("add-article-to-basket")]
-        public IActionResult AddArticleToBasket(Article article, int userId)
-        {
-            return Ok(_userRepository.AddArticleToBasket(article, userId));
-        }
     }
 }

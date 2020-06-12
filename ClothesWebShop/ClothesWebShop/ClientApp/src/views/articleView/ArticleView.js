@@ -1,14 +1,19 @@
 import React from "react";
 import ImageDisplay from "./ImageDisplay";
-import Info from "./Info";
-import { getArticle, addArticleToBasket } from "../../apiRequests";
+import { Info } from "./Info";
+import { PopUp } from "./PopUp";
+import { getArticle, addArticleToBasket, getUserById } from "../../apiRequests";
 import "../../css/article.css";
+import { getCookie } from "../../cookie";
 
 export class ArticleView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       article: null,
+      user: null,
+      amountSelected: 0,
+      seen: false,
     };
   }
 
@@ -19,26 +24,95 @@ export class ArticleView extends React.Component {
         this.setState({ article });
       });
     }
+    if (this.state.user === null) {
+      let id = getCookie("id");
+      if (id !== null) {
+        getUserById(id).then((user) => {
+          this.setState({ user });
+          if (user.baskets !== null) {
+            user.baskets.forEach((item) => {
+              if (item.articleId === this.state.articleId) {
+                this.setState({ amountSelected: item.amountSelected });
+              }
+            });
+          }
+        });
+      }
+    }
   }
 
-  handleAddToBasket = () => {
-    if (this.state.user === null) {
-      this.props.history.push("/login");
-    } else {
-      addArticleToBasket(this.state.article);
+  handleLowerAmountSelectedByOne = () => {
+    let amountSelected = this.state.amountSelected - 1;
+    if (this.state.amountSelected > 0) {
+      this.setState({ amountSelected });
     }
   };
 
+  handleRaiseAmountSelectedByOne = () => {
+    let amountSelected = this.state.amountSelected + 1;
+    if (this.state.amountSelected < this.state.article.amountAvailable) {
+      this.setState({ amountSelected });
+    }
+  };
+
+  handleAddToBasket = () => {
+    if (this.state.amountSelected !== 0) {
+      let id = getCookie("id");
+      if (id === null) {
+        this.props.history.push("/login");
+      } else {
+        getUserById(id).then((user) => {
+          this.setState({ user });
+          addArticleToBasket(
+            this.state.article.id,
+            this.state.user.id,
+            this.state.amountSelected,
+            this.state.article.price
+          ).then(() => {
+            getUserById(id).then((user) => {
+              this.setState({ user, seen: !this.state.seen });
+            });
+          });
+        });
+      }
+    }
+  };
+
+  handleGoToBasket = () => {
+    this.props.history.push("/basket");
+  };
+
+  handleStayOnArticle = () => {
+    this.setState({ seen: !this.state.seen });
+    this.props.history.push("/");
+  };
+
   render() {
-    const { article } = this.state;
+    const { article, amountSelected, seen } = this.state;
     return (
       <div className="article-view">
         <ImageDisplay />
         {article === null ? (
           <div></div>
         ) : (
-          <Info article={article} addToBasket={this.handleAddToBasket} />
+          <Info
+            amountSelected={amountSelected}
+            article={article}
+            addToBasket={this.handleAddToBasket}
+            lowerAmountSelectedByOne={this.handleLowerAmountSelectedByOne}
+            raiseAmountSelectedByOne={this.handleRaiseAmountSelectedByOne}
+          />
         )}
+        <div>
+          {seen ? (
+            <PopUp
+              goToBasket={this.handleGoToBasket}
+              stayOnArticle={this.handleStayOnArticle}
+              article={article}
+              amountSelected={amountSelected}
+            />
+          ) : null}
+        </div>
       </div>
     );
   }

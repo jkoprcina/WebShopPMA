@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ClothesWebShop.Data.Models
@@ -18,16 +17,22 @@ namespace ClothesWebShop.Data.Models
 
         [Required(ErrorMessage = "Total price is required"),
             Range(double.Epsilon, double.MaxValue)]
-        public double TotalPrice { get; set; }
+        public double Price { get; set; }
 
         [Required]
         public bool IsDelivered { get; set; }
+
+        [Required(ErrorMessage = "Amount available is required"),
+            Range(0, int.MaxValue)]
+        public int Amount { get; set; }
+
 
         [Required]
         public int UserId { get; set; }
         public User User { get;set; }
 
         [Required]
-        public ICollection<ArticleOrder> ArticleOrders { get; set; }
+        public int ArticleId { get; set; }
+        public Article Article { get; set; }
     }
 }

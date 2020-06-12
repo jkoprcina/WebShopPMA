@@ -3,6 +3,7 @@ import Display from "./Display";
 import Filter from "./Filter";
 import { getArticles, getUserById } from "../../apiRequests";
 import "../../css/mainDisplay.css";
+import { getCookie } from "../../cookie";
 
 export class MainDisplayView extends React.Component {
   constructor(props) {
@@ -21,9 +22,12 @@ export class MainDisplayView extends React.Component {
         }
       });
     }
-    getUserById(1).then((user) => {
-      this.setState({ user });
-    });
+    let id = getCookie("id");
+    if (id !== null) {
+      getUserById(id).then((user) => {
+        this.setState({ user });
+      });
+    }
   }
 
   render() {

@@ -36,8 +36,9 @@ namespace ClothesWebShop.Data.Models
             RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$",
             ErrorMessage = "Password must have minimum eight characters, at least one uppercase letter, one lowercase letter and one number")]
         public string Password { get; set; }
-        public ICollection<Article> Basket { get; set; }
 
+        public ICollection<Order> Orders { get; set; }
+        public ICollection<Basket> Baskets { get; set; }
         public ICollection<Address> Addresses { get; set; }
         public ICollection<PaymentMethod> PaymentMethods { get; set; }
     }

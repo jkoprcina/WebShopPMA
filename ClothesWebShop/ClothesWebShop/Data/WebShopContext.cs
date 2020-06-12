@@ -19,7 +19,8 @@ namespace ClothesWebShop.Data
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Order> Orders { get;set; }
-        public DbSet<ArticleOrder> ArticleOrders { get; set; }
+
+        public DbSet<Basket> Baskets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,10 +29,10 @@ namespace ClothesWebShop.Data
                 new Article()
                 {
                     Id = 1,
-                    Name = "Shirt",
+                    Name = "Shirt 1",
                     Size = Sizes.L,
                     Price = 22.5,
-                    Description = "A plain shirt",
+                    Description = "A plain shirt 1",
                     Category = "Plain",
                     Color = "Green",
                     AmountAvailable = 5,
@@ -41,10 +42,10 @@ namespace ClothesWebShop.Data
                 new Article()
                 {
                     Id = 2,
-                    Name = "Shirt",
+                    Name = "Shirt 2",
                     Size = Sizes.S,
                     Price = 22.5,
-                    Description = "A plain shirt",
+                    Description = "A plain shirt 2",
                     Category = "Plain",
                     Color = "Green",
                     AmountAvailable = 5,
@@ -54,10 +55,10 @@ namespace ClothesWebShop.Data
                 new Article()
                 {
                     Id = 3,
-                    Name = "Shirt",
+                    Name = "Shirt 3",
                     Size = Sizes.XL,
                     Price = 22.5,
-                    Description = "A plain shirt",
+                    Description = "A plain shirt 3",
                     Category = "Plain",
                     Color = "Green",
                     AmountAvailable = 10,
@@ -67,10 +68,10 @@ namespace ClothesWebShop.Data
                 new Article()
                 {
                     Id = 4,
-                    Name = "Shirt",
+                    Name = "Shirt 4",
                     Size = Sizes.XL,
                     Price = 22.5,
-                    Description = "A plain shirt",
+                    Description = "A plain shirt 4",
                     Category = "Plain",
                     Color = "Green",
                     AmountAvailable = 10,
@@ -80,10 +81,10 @@ namespace ClothesWebShop.Data
                 new Article()
                 {
                     Id = 5,
-                    Name = "Shirt",
+                    Name = "Shirt 5",
                     Size = Sizes.XL,
                     Price = 22.5,
-                    Description = "A plain shirt",
+                    Description = "A plain shirt 5",
                     Category = "Plain",
                     Color = "Green",
                     AmountAvailable = 10,
@@ -93,10 +94,10 @@ namespace ClothesWebShop.Data
                 new Article()
                 {
                     Id = 6,
-                    Name = "Shirt",
+                    Name = "Shirt 6",
                     Size = Sizes.XL,
                     Price = 22.5,
-                    Description = "A plain shirt",
+                    Description = "A plain shirt 6",
                     Category = "Plain",
                     Color = "Green",
                     AmountAvailable = 10,

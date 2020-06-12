@@ -7,6 +7,5 @@ namespace ClothesWebShop.Repository
         User GetById(int id);
         User GetByEmailAndPassword(string email, string password);
         User Create(User user);
-        bool AddArticleToBasket(Article article, int userId);
     }
 }
