@@ -1,23 +1,23 @@
 import axios from "axios";
 
-export const getArticle = (id) =>
+export const getProduct = (id) =>
   axios
-    .get("api/articles/get-by-id", { params: { id } })
+    .get("api/products/get-by-id", { params: { id } })
     .then((response) => {
       return response.data;
     })
     .catch(() => {
-      alert("Get article failed");
+      alert("Get product failed");
     });
 
-export const getArticles = () =>
+export const getProducts = () =>
   axios
-    .get("api/articles")
+    .get("api/products")
     .then((response) => {
       return response.data;
     })
     .catch(() => {
-      alert("Get articles failed");
+      alert("Get products failed");
     });
 
 export const getUserByUsernamePassword = (email, password) =>
@@ -57,10 +57,10 @@ export const createUser = (firstName, lastName, username, email, password) =>
       return null;
     });
 
-export const addArticleToBasket = (articleId, userId, amountSelected, price) =>
+export const addProductToCart = (productId, userId, amountSelected, price) =>
   axios
-    .post("api/baskets/add", {
-      articleId,
+    .post("api/cart/add", {
+      productId,
       userId,
       amountSelected,
       price,
@@ -69,23 +69,23 @@ export const addArticleToBasket = (articleId, userId, amountSelected, price) =>
       return response.data;
     })
     .catch(() => {
-      alert("Add basket failed");
+      alert("Add product to cart failed");
     });
 
-export const deleteBasket = (basketId) =>
+export const deleteProductFromCart = (productInCartId) =>
   axios
-    .delete("api/baskets/delete", { params: { basketId } })
+    .delete("api/cart/delete", { params: { productInCartId } })
     .then((response) => {
       return response.data;
     })
     .catch(() => {
-      alert("Delete basket to basket failed");
+      alert("Delete product form cart failed");
     });
 
-export const addOrder = (articleId, userId, amountSelected, price) =>
+export const addOrder = (productId, userId, amountSelected, price) =>
   axios
     .post("api/orders", {
-      articleId,
+      productId,
       userId,
       amountSelected,
       price,
@@ -95,4 +95,48 @@ export const addOrder = (articleId, userId, amountSelected, price) =>
     })
     .catch(() => {
       alert("Add order failed");
+    });
+
+export const addProduct = (
+  name,
+  price,
+  description,
+  color,
+  amountAvailable,
+  brandId
+) =>
+  axios
+    .post("api/products", {
+      name,
+      price,
+      description,
+      color,
+      amountAvailable,
+      brandId: 1,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      alert("Add product failed");
+    });
+
+export const getBrands = () =>
+  axios
+    .get("api/brands")
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      alert("Get brands failed");
+    });
+
+export const deleteProduct = (productId) =>
+  axios
+    .delete("api/products", { params: { id: productId } })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((e) => {
+      alert(e);
     });

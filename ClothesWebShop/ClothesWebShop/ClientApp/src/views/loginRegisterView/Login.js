@@ -5,15 +5,12 @@ const Login = (props) => {
     <div className="login-register-view__login">
       <section>
         <h2>Welcome Back</h2>
-        <div className="login-register-view__input-div">
-          <label>Email</label>
-          <input
-            type="email"
-            placeholder="E-mail"
-            value={props.email}
-            onChange={(e) => props.updateEmailValue(e)}
-          />
-        </div>
+        <input
+          type="email"
+          placeholder="E-mail"
+          value={props.email}
+          onChange={(e) => props.updateEmailValue(e)}
+        />
         <input
           type="password"
           placeholder="Password"

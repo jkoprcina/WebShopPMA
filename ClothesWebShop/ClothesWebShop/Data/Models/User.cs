@@ -38,8 +38,6 @@ namespace ClothesWebShop.Data.Models
         public string Password { get; set; }
 
         public ICollection<Order> Orders { get; set; }
-        public ICollection<Basket> Baskets { get; set; }
-        public ICollection<Address> Addresses { get; set; }
-        public ICollection<PaymentMethod> PaymentMethods { get; set; }
+        public ICollection<ProductInCart> ProductsInCart { get; set; }
     }
 }

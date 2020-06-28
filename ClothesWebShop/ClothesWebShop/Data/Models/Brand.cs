@@ -12,6 +12,6 @@ namespace ClothesWebShop.Data.Models
             ErrorMessage = "The name must be between 3 and 50 characters")]
         public string Name { get; set; }
 
-        public ICollection<Article> Articles { get; set; }
+        public ICollection<Product> Articles { get; set; }
     }
 }

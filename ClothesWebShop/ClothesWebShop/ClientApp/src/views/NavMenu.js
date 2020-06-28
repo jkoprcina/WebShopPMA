@@ -9,19 +9,21 @@ import {
   NavLink,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import "../css/navMenu.css";
+import { UserProfilePopUp } from "./UserProfilePopUp";
 import { getUserById } from "../apiRequests";
-import { getCookie } from "../cookie";
+import { getCookie, removeCookie } from "../cookie";
+import "../css/navMenu.css";
 
 export class NavMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       user: null,
+      seen: false,
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let id = getCookie("id");
     if (id !== null) {
       getUserById(id).then((user) => {
@@ -30,10 +32,24 @@ export class NavMenu extends React.Component {
     }
   }
 
+  handleToggle = () => {
+    this.setState({ seen: !this.state.seen });
+  };
+
+  handleLogOut = () => {
+    let promise = new Promise(function (resolve) {
+      removeCookie();
+      setTimeout(() => resolve(""), 1000);
+    });
+    promise.then(() => {
+      this.setState({ seen: !this.state.seen, user: null });
+    });
+  };
+
   render() {
-    const { user } = this.state;
+    const { user, seen } = this.state;
     return (
-      <header>
+      <header className="nav-bar">
         <Navbar
           className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3"
           light
@@ -58,12 +74,23 @@ export class NavMenu extends React.Component {
                   </NavItem>
                 ) : (
                   <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/basket">
+                    <NavLink tag={Link} className="text-dark" to="/cart">
                       Basket
                     </NavLink>
                   </NavItem>
                 )}
-                {user === null ? <div></div> : <span>{user.username}</span>}
+                {seen ? (
+                  <UserProfilePopUp
+                    user={user}
+                    toggle={this.handleToggle}
+                    logOut={this.handleLogOut}
+                  />
+                ) : null}
+                {user === null ? (
+                  <div></div>
+                ) : (
+                  <span onClick={this.handleToggle}>{user.username}</span>
+                )}
               </ul>
             </Collapse>
           </Container>

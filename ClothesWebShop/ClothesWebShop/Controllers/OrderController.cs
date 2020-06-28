@@ -17,12 +17,12 @@ namespace ClothesWebShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(AddOrder addOrder)
+        public IActionResult Create(AddProductToCart addOrder)
         {
             var order = new Order()
             {
                 UserId = addOrder.UserId,
-                ArticleId = addOrder.ArticleId,
+                ProductId = addOrder.ProductId,
                 Price = addOrder.Price,
                 Amount = addOrder.AmountSelected,
                 OrderDate = DateTime.Now,

@@ -39,9 +39,9 @@ namespace ClothesWebShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(User user)
+        public IActionResult Add(User user)
         {
-            var newUser = _userRepository.Create(user);
+            var newUser = _userRepository.Add(user);
             if (newUser == null)
             {
                 return Forbid();

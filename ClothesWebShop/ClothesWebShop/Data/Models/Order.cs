@@ -32,7 +32,7 @@ namespace ClothesWebShop.Data.Models
         public User User { get;set; }
 
         [Required]
-        public int ArticleId { get; set; }
-        public Article Article { get; set; }
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
     }
 }

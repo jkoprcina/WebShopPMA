@@ -1,4 +1,5 @@
 using ClothesWebShop.Data;
+using ClothesWebShop.Domain.Implementations;
 using ClothesWebShop.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,10 +31,11 @@ namespace ClothesWebShop
             services.AddDbContext<WebShopContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("WebShopContextString")));
 
-            services.AddScoped<IArticleRepository, ArticleRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductsInCartRepository, ProductsInCartRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddMvc().AddNewtonsoftJson(options =>
             {
