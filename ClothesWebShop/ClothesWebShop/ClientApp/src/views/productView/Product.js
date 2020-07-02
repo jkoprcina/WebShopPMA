@@ -23,6 +23,7 @@ export class Product extends React.Component {
       addToCartPopUpBool: false,
       updateProductPopUpBool: false,
       productError: "",
+      isAdmin: false,
     };
   }
 
@@ -35,6 +36,9 @@ export class Product extends React.Component {
         if (id !== null) {
           getUserById(id).then((user) => {
             this.setState({ user });
+            if (user.isAdmin) {
+              this.setState({ isAdmin: true });
+            }
             if (user.productsInCart !== null) {
               user.productsInCart.forEach((item) => {
                 if (item.productId === this.state.product.id) {
@@ -110,15 +114,21 @@ export class Product extends React.Component {
   };
 
   handleUpdateProduct = (product) => {
-    let updateProductError = validateProduct(product);
+    console.log(product);
+    let updateProductError = validateProduct(
+      product.name,
+      product.price,
+      product.description,
+      product.amountAvailable
+    );
     if (updateProductError === "None") {
       updateProduct(
         product.id,
         product.name,
         product.price,
+        product.description,
         product.color,
-        product.amountAvailable,
-        product.description
+        product.amountAvailable
       ).then((response) => {
         if (response !== null) {
           this.setState({ product: response });
@@ -140,6 +150,7 @@ export class Product extends React.Component {
     const {
       product,
       amountSelected,
+      isAdmin,
       addToCartPopUpBool,
       updateProductPopUpBool,
     } = this.state;
@@ -154,6 +165,7 @@ export class Product extends React.Component {
           <Info
             amountSelected={amountSelected}
             product={product}
+            isAdmin={isAdmin}
             addToCart={this.handleAddToCart}
             lowerAmountSelectedByOne={this.handleLowerAmountSelectedByOne}
             raiseAmountSelectedByOne={this.handleRaiseAmountSelectedByOne}

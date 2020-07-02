@@ -16,6 +16,7 @@ export class MainDisplay extends React.Component {
       user: null,
       addProductPopUpBool: null,
       productError: "",
+      isAdmin: false,
     };
   }
 
@@ -36,6 +37,9 @@ export class MainDisplay extends React.Component {
     if (id !== null) {
       getUserById(id).then((user) => {
         this.setState({ user });
+        if (user.isAdmin) {
+          this.setState({ isAdmin: true });
+        }
       });
     }
   }
@@ -52,15 +56,13 @@ export class MainDisplay extends React.Component {
   };
 
   handleAddProduct = (product) => {
-    if (
-      validateProduct(
-        product.name,
-        product.price,
-        product.description,
-        product.color,
-        product.amountAvailable
-      )
-    ) {
+    let productError = validateProduct(
+      product.name,
+      product.price,
+      product.description,
+      product.amountAvailable
+    );
+    if (productError === "None") {
       addProduct(
         product.name,
         product.price,
@@ -73,17 +75,26 @@ export class MainDisplay extends React.Component {
           this.handleToggleAddProductPopUp();
         });
       });
+    } else {
+      this.setState({ productError });
     }
   };
 
   render() {
-    const { products, addProductPopUpBool } = this.state;
+    const { products, addProductPopUpBool, isAdmin } = this.state;
     return (
       <div className="main-display-view">
         <div className="filter">
-          <button onClick={this.handleToggleAddProductPopUp}>
-            Add new product
-          </button>
+          {isAdmin ? (
+            <button
+              className="main-display-view__button"
+              onClick={this.handleToggleAddProductPopUp}
+            >
+              Add new product
+            </button>
+          ) : (
+            <div></div>
+          )}
         </div>
         {products === null ? (
           <div></div>

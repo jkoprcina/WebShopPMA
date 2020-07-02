@@ -17,24 +17,31 @@ export const Info = (props) => {
         </span>
       </div>
       <div className="product-view__buttons-div">
-        <button
-          className="product-view__buttons-div__button"
-          onClick={props.addToCart}
-        >
-          Add To Cart
-        </button>
-        <button
-          className="product-view__buttons-div__button"
-          onClick={props.updateProduct}
-        >
-          Update Product
-        </button>
-        <button
-          className="product-view__buttons-div__button"
-          onClick={props.deleteProduct}
-        >
-          Delete Product
-        </button>
+        {props.isAdmin ? (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <button
+              className="product-view__buttons-div__button"
+              onClick={props.updateProduct}
+            >
+              Update Product
+            </button>
+            <button
+              className="product-view__buttons-div__button"
+              onClick={props.deleteProduct}
+            >
+              Delete Product
+            </button>
+          </div>
+        ) : (
+          <div>
+            <button
+              className="product-view__buttons-div__button"
+              onClick={props.addToCart}
+            >
+              Add To Cart
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

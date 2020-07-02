@@ -17,6 +17,14 @@
   max-height: 100%;
 }
 
+.main-display-view__button {
+  border: 2px solid lightgreen;
+  border-radius: 3px;
+  background-color: lightgreen;
+  width: 200px;
+  margin-top: 20px;
+}
+
 .display {
   width: 80%;
   margin: 15px 0;

@@ -42,9 +42,9 @@ export class AddProductPopUp extends React.Component {
     });
   };
 
-  handleCreateNewProductAndCallUpdateProduce = () => {
-    const { id, name, price, color, amountAvailable, description } = this.state;
-    let product = { id, name, price, color, amountAvailable, description };
+  handleCreateNewProductAndCallAddProduct = () => {
+    const { name, price, color, amountAvailable, description } = this.state;
+    let product = { name, price, color, amountAvailable, description };
     this.props.addProduct(product);
   };
 
@@ -94,13 +94,13 @@ export class AddProductPopUp extends React.Component {
               />
             </div>
           </div>
-          <p className="login-register-view__error-message">
-            {this.props.updateProductError}
+          <p className="popup__inner__error-message">
+            {this.props.productError}
           </p>
           <div className="popup__inner__button-div">
             <button
               className="popup__inner__button-div__button-full"
-              onClick={this.handleCreateNewProductAndCallAddProduce}
+              onClick={this.handleCreateNewProductAndCallAddProduct}
             >
               Add Product
             </button>

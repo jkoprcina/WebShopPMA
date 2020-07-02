@@ -13,13 +13,13 @@ export const UserProfilePopUp = (props) => {
         </div>
         <div className="popup__inner__button-div">
           <button
-            className="popup__inner__button-div__button-shop"
+            className="popup__inner__button-div__button-full"
             onClick={() => props.toggle()}
           >
             Continue Shopping
           </button>
           <button
-            className="popup__inner__button-div__button-log-out"
+            className="popup__inner__button-div__button-empty"
             onClick={() => props.logOut()}
           >
             Sign Out

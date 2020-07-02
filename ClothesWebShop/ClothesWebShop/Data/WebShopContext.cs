@@ -107,11 +107,22 @@ namespace ClothesWebShop.Data
                 new User()
                 {
                     Id = 1,
-                    FirstName = "Josip",
-                    LastName = "Koprcina",
-                    Email = "e",
-                    Username = "jkoprcina",
-                    Password = "p"
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    Email = "admin@email.com",
+                    Username = "adminUsername",
+                    Password = "admin",
+                    IsAdmin = true
+                },
+                new User()
+                {
+                    Id = 2,
+                    FirstName = "User",
+                    LastName = "User",
+                    Email = "user@gmail.com",
+                    Username = "userUsername",
+                    Password = "user",
+                    IsAdmin = false
                 }
             };
 

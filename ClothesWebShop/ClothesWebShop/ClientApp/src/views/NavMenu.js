@@ -78,7 +78,7 @@ export class NavMenu extends React.Component {
                 ) : (
                   <NavItem>
                     <NavLink tag={Link} className="text-dark" to="/cart">
-                      Basket
+                      Cart
                     </NavLink>
                   </NavItem>
                 )}

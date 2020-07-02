@@ -48,18 +48,18 @@ export const updateProduct = (
   id,
   name,
   price,
+  description,
   color,
-  amountAvailable,
-  description
+  amountAvailable
 ) =>
   axios
     .put("api/products", {
       id,
       name,
       price,
+      description,
       color,
       amountAvailable,
-      description,
     })
     .then((response) => {
       return response.data;
