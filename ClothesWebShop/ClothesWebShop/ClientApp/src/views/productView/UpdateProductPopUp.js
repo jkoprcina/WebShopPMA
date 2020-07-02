@@ -1,4 +1,7 @@
 import React from "react";
+import Select from "react-select";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { SIZES } from "../../constants";
 
 export class UpdateProductPopUp extends React.Component {
   constructor(props) {
@@ -10,6 +13,7 @@ export class UpdateProductPopUp extends React.Component {
       color: props.product.color,
       amountAvailable: props.product.amountAvailable,
       description: props.product.description,
+      size: props.product.size,
     };
   }
 
@@ -43,6 +47,13 @@ export class UpdateProductPopUp extends React.Component {
     });
   };
 
+  handleUpdateSizeValue = (e) => {
+    console.log(e);
+    this.setState({
+      size: e.target.value,
+    });
+  };
+
   handleCreateNewProductAndCallUpdateProduce = () => {
     const { id, name, price, color, amountAvailable, description } = this.state;
     let product = { id, name, price, color, amountAvailable, description };
@@ -50,7 +61,14 @@ export class UpdateProductPopUp extends React.Component {
   };
 
   render() {
-    const { name, price, color, amountAvailable, description } = this.state;
+    const {
+      name,
+      price,
+      color,
+      amountAvailable,
+      description,
+      size,
+    } = this.state;
     return (
       <div className="popup">
         <div className="popup__inner">
@@ -61,6 +79,7 @@ export class UpdateProductPopUp extends React.Component {
               <label>Color:</label>
               <label>Description:</label>
               <label>Amount Available:</label>
+              <label>Size</label>
             </div>
             <div className="popup__inner__div__input-div">
               <input
@@ -93,6 +112,18 @@ export class UpdateProductPopUp extends React.Component {
                 value={amountAvailable}
                 onChange={(e) => this.handleUpdateAmountAvailableValue(e)}
               />
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-2"></div>
+                  <div className="col-md-6">
+                    <Select
+                      value={size}
+                      options={SIZES}
+                      onChange={(e) => this.handleUpdateSizeValue(e)}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <p className="login-register-view__error-message">
