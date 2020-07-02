@@ -1,14 +1,17 @@
 import React from "react";
 import { Info } from "./Info";
-import { PopUp } from "./PopUp";
+import { AddToCartPopUp } from "./AddToCartPopUp";
+import { UpdateProductPopUp } from "./UpdateProductPopUp";
 import {
   getProduct,
-  addProductToCart,
-  getUserById,
+  updateProduct,
   deleteProduct,
-} from "../../apiRequests";
+} from "../../apiRequests/productRequests";
+import { addProductInCart } from "../../apiRequests/productInCartRequests";
+import { getUserById } from "../../apiRequests/userRequests";
 import { getCookie } from "../../cookie";
 import "../../css/product.css";
+import { validateProduct } from "../../validations/productValidations";
 
 export class Product extends React.Component {
   constructor(props) {
@@ -17,7 +20,9 @@ export class Product extends React.Component {
       product: null,
       user: null,
       amountSelected: 0,
-      seen: false,
+      addToCartPopUpBool: false,
+      updateProductPopUpBool: false,
+      productError: "",
     };
   }
 
@@ -26,16 +31,16 @@ export class Product extends React.Component {
     if (this.state.product === null || this.state.product.id !== productId) {
       getProduct(productId).then((product) => {
         this.setState({ product });
-      });
-    }
-    let id = getCookie("id");
-    if (id !== null) {
-      getUserById(id).then((user) => {
-        this.setState({ user });
-        if (user.productsInCart !== null) {
-          user.productsInCart.forEach((item) => {
-            if (item.productId === this.state.product.id) {
-              this.setState({ amountSelected: item.amountSelected });
+        let id = getCookie("id");
+        if (id !== null) {
+          getUserById(id).then((user) => {
+            this.setState({ user });
+            if (user.productsInCart !== null) {
+              user.productsInCart.forEach((item) => {
+                if (item.productId === this.state.product.id) {
+                  this.setState({ amountSelected: item.amountSelected });
+                }
+              });
             }
           });
         }
@@ -65,14 +70,17 @@ export class Product extends React.Component {
       } else {
         getUserById(id).then((user) => {
           this.setState({ user });
-          addProductToCart(
+          addProductInCart(
             this.state.product.id,
             this.state.user.id,
             this.state.amountSelected,
             this.state.product.price
           ).then(() => {
             getUserById(id).then((user) => {
-              this.setState({ user, seen: !this.state.seen });
+              this.setState({
+                user,
+                addToCartPopUpBool: !this.state.addToCartPopUpBool,
+              });
             });
           });
         });
@@ -80,12 +88,18 @@ export class Product extends React.Component {
     }
   };
 
+  handleUpdateProductPopUpToggle = () => {
+    this.setState({
+      updateProductPopUpBool: !this.state.updateProductPopUpBool,
+    });
+  };
+
   handleGoToCart = () => {
     this.props.history.push("/cart");
   };
 
   handleStayOnProduct = () => {
-    this.setState({ seen: !this.state.seen });
+    this.setState({ addToCartPopUpBool: !this.state.addToCartPopUpBool });
     this.props.history.push("/");
   };
 
@@ -95,10 +109,42 @@ export class Product extends React.Component {
     );
   };
 
+  handleUpdateProduct = (product) => {
+    let updateProductError = validateProduct(product);
+    if (updateProductError === "None") {
+      updateProduct(
+        product.id,
+        product.name,
+        product.price,
+        product.color,
+        product.amountAvailable,
+        product.description
+      ).then((response) => {
+        if (response !== null) {
+          this.setState({ product: response });
+          this.handleToggleUpdateProductPopUp();
+        }
+      });
+    } else {
+      this.setState({ updateProductError });
+    }
+  };
+
+  handleToggleUpdateProductPopUp = () => {
+    this.setState({
+      updateProductPopUpBool: !this.state.updateProductPopUpBool,
+    });
+  };
+
   render() {
-    const { product, amountSelected, seen } = this.state;
+    const {
+      product,
+      amountSelected,
+      addToCartPopUpBool,
+      updateProductPopUpBool,
+    } = this.state;
     return (
-      <div className="article-view">
+      <div className="product-view">
         <div className="image-display">
           <img src={require("../../images/shirt.jpg")} alt="Man in Shirt" />
         </div>
@@ -112,15 +158,26 @@ export class Product extends React.Component {
             lowerAmountSelectedByOne={this.handleLowerAmountSelectedByOne}
             raiseAmountSelectedByOne={this.handleRaiseAmountSelectedByOne}
             deleteProduct={this.handleDeleteProduct}
+            updateProduct={this.handleToggleUpdateProductPopUp}
           />
         )}
         <div>
-          {seen ? (
-            <PopUp
+          {addToCartPopUpBool ? (
+            <AddToCartPopUp
               goToCart={this.handleGoToCart}
               stayOnProduct={this.handleStayOnProduct}
               product={product}
               amountSelected={amountSelected}
+            />
+          ) : null}
+        </div>
+        <div>
+          {updateProductPopUpBool ? (
+            <UpdateProductPopUp
+              updateProduct={this.handleUpdateProduct}
+              exit={this.handleToggleUpdateProductPopUp}
+              product={product}
+              updateProductError={this.state.updateProductError}
             />
           ) : null}
         </div>

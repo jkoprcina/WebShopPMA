@@ -1,5 +1,6 @@
 ﻿using ClothesWebShop.Data;
 using ClothesWebShop.Data.Models;
+using ClothesWebShop.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,24 @@ namespace ClothesWebShop.Repository
         {
             _context.Products.Add(product);
             return _context.SaveChanges();
+        }
+
+        public Product Update(Product product)
+        {
+            var oldProduct = GetById(product.Id);
+            
+            if (oldProduct == null) 
+                return null;
+
+            oldProduct.Name = product.Name;
+            oldProduct.Price = product.Price;
+            oldProduct.Category = product.Category;
+            oldProduct.AmountAvailable = product.AmountAvailable;
+            oldProduct.Color = product.Color;
+            oldProduct.Description = product.Description;
+
+            _context.SaveChanges();
+            return oldProduct;
         }
 
         public int Delete(int id)

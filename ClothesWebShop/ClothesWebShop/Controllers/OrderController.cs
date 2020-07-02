@@ -1,6 +1,6 @@
 ﻿using ClothesWebShop.Data.Dto;
 using ClothesWebShop.Data.Models;
-using ClothesWebShop.Repository;
+using ClothesWebShop.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 

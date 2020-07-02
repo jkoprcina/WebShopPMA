@@ -16,10 +16,26 @@ export const Info = (props) => {
           &#43;
         </span>
       </div>
-      <button className="article-view__button" onClick={props.addToCart}>
-        Add To Cart
-      </button>
-      <button onClick={props.deleteProduct}>Delete Product</button>
+      <div className="product-view__buttons-div">
+        <button
+          className="product-view__buttons-div__button"
+          onClick={props.addToCart}
+        >
+          Add To Cart
+        </button>
+        <button
+          className="product-view__buttons-div__button"
+          onClick={props.updateProduct}
+        >
+          Update Product
+        </button>
+        <button
+          className="product-view__buttons-div__button"
+          onClick={props.deleteProduct}
+        >
+          Delete Product
+        </button>
+      </div>
     </div>
   );
 };

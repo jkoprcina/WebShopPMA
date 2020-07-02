@@ -1,5 +1,7 @@
 using ClothesWebShop.Data;
 using ClothesWebShop.Domain.Implementations;
+using ClothesWebShop.Domain.Interfaces;
+using ClothesWebShop.Interfaces;
 using ClothesWebShop.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

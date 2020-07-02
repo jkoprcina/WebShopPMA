@@ -1,6 +1,6 @@
 ﻿using ClothesWebShop.Data.Models;
 
-namespace ClothesWebShop.Repository
+namespace ClothesWebShop.Interfaces
 {
     public interface IOrderRepository
     {

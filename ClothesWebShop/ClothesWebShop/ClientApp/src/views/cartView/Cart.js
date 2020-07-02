@@ -1,13 +1,13 @@
 import React from "react";
 import { OrderTotal } from "./OderTotal";
-import { PopUp } from "./PopUp";
+import { ConfirmationPopUp } from "./ConfirmationPopUp";
 import { getCookie } from "../../cookie";
+import { getUserById } from "../../apiRequests/userRequests";
+import { addOrder } from "../../apiRequests/orderRequests";
 import {
-  getUserById,
-  addOrder,
-  addProductToCart,
-  deleteProductFromCart,
-} from "../../apiRequests";
+  addProductInCart,
+  deleteProductInCart,
+} from "../../apiRequests/productInCartRequests";
 import "../../css/cart.css";
 
 export class Cart extends React.Component {
@@ -16,7 +16,7 @@ export class Cart extends React.Component {
     this.state = {
       totalPrice: 0,
       productsInCart: [],
-      seen: false,
+      confirmationPopUpBool: false,
     };
     this.getUser();
   }
@@ -48,12 +48,12 @@ export class Cart extends React.Component {
 
   handleLowerAmountSelectedByOne = (item) => {
     if (item.amountSelected > 0) {
-      addProductToCart(
+      addProductInCart(
         item.userId,
         item.productId,
         item.amountSelected - 1,
         item.price
-      ).then(() => {
+      ).then((response) => {
         getUserById(item.userId).then((user) => {
           this.setState({ user });
         });
@@ -62,8 +62,8 @@ export class Cart extends React.Component {
   };
 
   handleRaiseAmountSelectedByOne = (item) => {
-    if (item.article.amountAvailable > item.amountSelected) {
-      addProductToCart(
+    if (item.amountSelected > item.amountSelected) {
+      addProductInCart(
         item.userId,
         item.productId,
         item.amountSelected + 1,
@@ -87,9 +87,11 @@ export class Cart extends React.Component {
           cart.price
         ).then((data) => {
           if (data !== undefined) {
-            deleteProductFromCart(cart.id).then(() => {
+            deleteProductInCart(cart.id).then(() => {
               getUserById(user.id).then(() => {
-                this.setState({ seen: !this.state.seen });
+                this.setState({
+                  confirmationPopUpBool: !this.state.confirmationPopUpBool,
+                });
               });
             });
           }
@@ -99,12 +101,12 @@ export class Cart extends React.Component {
   };
 
   handleGoToMainPage = () => {
-    this.setState({ seen: !this.state.seen });
+    this.setState({ confirmationPopUpBool: !this.state.confirmationPopUpBool });
     this.props.history.push("/");
   };
 
   handleRemoveProduct = (productId) => {
-    deleteProductFromCart(productId).then(
+    deleteProductInCart(productId).then(
       getUserById(this.state.user.id).then((user) => {
         this.setState({ user });
         this.calculatePrice();
@@ -113,7 +115,7 @@ export class Cart extends React.Component {
   };
 
   render() {
-    const { totalPrice, productsInCart, seen } = this.state;
+    const { totalPrice, productsInCart, confirmationPopUpBool } = this.state;
     return (
       <div className="cart-view">
         <div className="left">
@@ -174,8 +176,8 @@ export class Cart extends React.Component {
           <OrderTotal totalPrice={totalPrice} buy={this.handleBuy} />
         </div>
         <div>
-          {seen ? (
-            <PopUp goToMainPage={this.handleGoToMainPage} />
+          {confirmationPopUpBool ? (
+            <ConfirmationPopUp goToMainPage={this.handleGoToMainPage} />
           ) : (
             <div></div>
           )}

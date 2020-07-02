@@ -33,7 +33,12 @@
   font-weight: 400;
 }
 
-.product-view__button {
+.product-view__buttons-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-view__buttons-div__button {
   border: 2px solid lightgreen;
   border-radius: 3px;
   background-color: lightgreen;

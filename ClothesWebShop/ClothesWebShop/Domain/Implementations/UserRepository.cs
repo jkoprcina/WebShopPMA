@@ -2,6 +2,7 @@
 using ClothesWebShop.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using ClothesWebShop.Interfaces;
 
 namespace ClothesWebShop.Repository
 {

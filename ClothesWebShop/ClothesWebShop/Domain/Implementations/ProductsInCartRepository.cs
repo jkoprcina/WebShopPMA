@@ -1,5 +1,6 @@
 ﻿using ClothesWebShop.Data;
 using ClothesWebShop.Data.Models;
+using ClothesWebShop.Interfaces;
 using System.Linq;
 
 namespace ClothesWebShop.Repository

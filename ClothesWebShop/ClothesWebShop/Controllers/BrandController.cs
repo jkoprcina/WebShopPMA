@@ -1,4 +1,4 @@
-﻿using ClothesWebShop.Domain.Implementations;
+﻿using ClothesWebShop.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClothesWebShop.Controllers

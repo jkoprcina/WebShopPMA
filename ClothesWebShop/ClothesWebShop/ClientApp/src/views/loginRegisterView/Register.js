@@ -1,6 +1,6 @@
 import React from "react";
 
-const Register = (props) => {
+export const Register = (props) => {
   return (
     <div>
       <section>
@@ -53,5 +53,3 @@ const Register = (props) => {
     </div>
   );
 };
-
-export default Register;

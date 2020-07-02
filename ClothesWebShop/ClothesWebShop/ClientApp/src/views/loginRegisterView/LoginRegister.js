@@ -1,8 +1,14 @@
 import React from "react";
-import Login from "./Login";
-import Register from "./Register";
-import { getUserByUsernamePassword, createUser } from "../../apiRequests";
-import { validateLogin, validateRegister } from "../../validations";
+import { Login } from "./Login";
+import { Register } from "./Register";
+import {
+  getUserByUsernamePassword,
+  createUser,
+} from "../../apiRequests/userRequests";
+import {
+  validateLogin,
+  validateRegister,
+} from "../../validations/userValidations";
 import "../../css/loginRegister.css";
 import { setCookie } from "../../cookie";
 
@@ -92,6 +98,7 @@ export class LoginRegister extends React.Component {
       password,
       passwordRepeat
     );
+    console.log(firstName, lastName, username, email, password, passwordRepeat);
     if (handleRegisterError === "none") {
       createUser(firstName, lastName, username, email, password).then(
         (user) => {

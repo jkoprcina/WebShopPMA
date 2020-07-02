@@ -1,6 +1,6 @@
 import React from "react";
 
-const Login = (props) => {
+export const Login = (props) => {
   return (
     <div className="login-register-view__login">
       <section>
@@ -34,4 +34,3 @@ const Login = (props) => {
     </div>
   );
 };
-export default Login;

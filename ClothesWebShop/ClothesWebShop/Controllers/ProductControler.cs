@@ -1,5 +1,5 @@
 ﻿using ClothesWebShop.Data.Models;
-using ClothesWebShop.Repository;
+using ClothesWebShop.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClothesWebShop.Controllers
@@ -39,6 +39,18 @@ namespace ClothesWebShop.Controllers
             if (newProduct == 0)
             {
                 return Forbid();
+            }
+
+            return Ok(newProduct);
+        }
+
+        [HttpPut]
+        public IActionResult Update(Product product)
+        {
+            var newProduct = _productRepository.Update(product);
+            if (newProduct == null)
+            {
+                return NotFound();
             }
 
             return Ok(newProduct);

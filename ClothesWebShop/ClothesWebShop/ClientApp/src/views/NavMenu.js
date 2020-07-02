@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { UserProfilePopUp } from "./UserProfilePopUp";
-import { getUserById } from "../apiRequests";
+import { getUserById } from "../apiRequests/userRequests";
 import { getCookie, removeCookie } from "../cookie";
 import "../css/navMenu.css";
 
@@ -19,7 +19,7 @@ export class NavMenu extends React.Component {
     super(props);
     this.state = {
       user: null,
-      seen: false,
+      UserProfilePopUpBool: false,
     };
   }
 
@@ -33,7 +33,7 @@ export class NavMenu extends React.Component {
   }
 
   handleToggle = () => {
-    this.setState({ seen: !this.state.seen });
+    this.setState({ UserProfilePopUpBool: !this.state.UserProfilePopUpBool });
   };
 
   handleLogOut = () => {
@@ -42,12 +42,15 @@ export class NavMenu extends React.Component {
       setTimeout(() => resolve(""), 1000);
     });
     promise.then(() => {
-      this.setState({ seen: !this.state.seen, user: null });
+      this.setState({
+        UserProfilePopUpBool: !this.state.UserProfilePopUpBool,
+        user: null,
+      });
     });
   };
 
   render() {
-    const { user, seen } = this.state;
+    const { user, UserProfilePopUpBool } = this.state;
     return (
       <header className="nav-bar">
         <Navbar
@@ -79,7 +82,7 @@ export class NavMenu extends React.Component {
                     </NavLink>
                   </NavItem>
                 )}
-                {seen ? (
+                {UserProfilePopUpBool ? (
                   <UserProfilePopUp
                     user={user}
                     toggle={this.handleToggle}

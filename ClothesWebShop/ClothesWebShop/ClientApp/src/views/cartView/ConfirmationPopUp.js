@@ -1,6 +1,6 @@
 import React from "react";
 
-export const PopUp = (props) => {
+export const ConfirmationPopUp = (props) => {
   return (
     <div className="popup">
       <div className="popup__inner">

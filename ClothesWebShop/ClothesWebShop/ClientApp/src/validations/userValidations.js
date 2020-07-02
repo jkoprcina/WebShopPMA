@@ -52,17 +52,6 @@ export const validateRegister = (
   return "none";
 };
 
-export const validateAddProduct = (
-  name,
-  price,
-  description,
-  color,
-  amountAvailable
-) => {
-  console.log(name, price, description, color, amountAvailable);
-  return true;
-};
-
 const checkWordLength = (word) => {
   if (word.length < 3 || word.length > 50) {
     return true;

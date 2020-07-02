@@ -12,10 +12,10 @@
 
 .popup__inner {
   position: absolute;
-  left: 35%;
-  right: 35%;
-  top: 30%;
-  bottom: 45%;
+  left: 25%;
+  right: 25%;
+  top: 20%;
+  bottom: 35%;
   margin: auto;
   background: white;
   border-radius: 5px;
@@ -25,6 +25,36 @@
   margin: 40px 0 0 40px;
   display: flex;
   flex-direction: column;
+}
+
+.popup__inner__div {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  margin: 50px auto;
+}
+
+.popup__inner__div__label-div {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.popup__inner__div__label-div label {
+  margin: 3px auto;
+  height: 32px;
+  width: 300px;
+}
+
+.popup__inner__div__input-div {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.popup__inner__div__input-div input {
+  margin: 3px auto;
+  width: 100%;
 }
 
 .popup__inner__text__name {
@@ -37,7 +67,7 @@
   margin-top: 35px;
 }
 
-.popup__inner__button-div__button-full {
+.popup__inner__button-div__button-empty {
   margin: 10px;
   border-color: #ff4747;
   background: white;
@@ -47,7 +77,7 @@
   height: 40px;
 }
 
-.popup__inner__button-div__button-empty {
+.popup__inner__button-div__button-full {
   margin: 10px;
   border-color: #ff4747;
   background: #ff4747;

@@ -1,5 +1,5 @@
 ﻿using ClothesWebShop.Data.Models;
-using ClothesWebShop.Repository;
+using ClothesWebShop.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClothesWebShop.Controllers
