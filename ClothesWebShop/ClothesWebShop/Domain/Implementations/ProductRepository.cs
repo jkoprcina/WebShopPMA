@@ -18,12 +18,16 @@ namespace ClothesWebShop.Repository
 
         public List<Product> Get()
         {
-            return _context.Products.ToList();
+            return _context.Products
+                .Include(product => product.Brand)
+                .ToList();
         }
 
         public Product GetById(int id)
         {
-            return _context.Products.FirstOrDefault(product => product.Id == id);
+            return _context.Products
+                .Include(product => product.Brand)
+                .FirstOrDefault(product => product.Id == id);
         }
 
         public int Add(Product product)
@@ -45,6 +49,9 @@ namespace ClothesWebShop.Repository
             oldProduct.AmountAvailable = product.AmountAvailable;
             oldProduct.Color = product.Color;
             oldProduct.Description = product.Description;
+            oldProduct.Size = product.Size;
+            oldProduct.BrandId = product.Brand.Id;
+            oldProduct.Brand = product.Brand;
 
             _context.SaveChanges();
             return oldProduct;

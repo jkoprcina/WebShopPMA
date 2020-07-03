@@ -14,6 +14,8 @@ export class UpdateProductPopUp extends React.Component {
       amountAvailable: props.product.amountAvailable,
       description: props.product.description,
       size: props.product.size,
+      brand: props.product.brand,
+      brands: props.brands,
     };
   }
 
@@ -48,15 +50,34 @@ export class UpdateProductPopUp extends React.Component {
   };
 
   handleUpdateSizeValue = (e) => {
-    console.log(e);
-    this.setState({
-      size: e.target.value,
-    });
+    this.setState({ size: e.value });
+  };
+
+  handleUpdateBrandValue = (e) => {
+    this.setState({ brand: { name: e.label, id: e.value } });
   };
 
   handleCreateNewProductAndCallUpdateProduce = () => {
-    const { id, name, price, color, amountAvailable, description } = this.state;
-    let product = { id, name, price, color, amountAvailable, description };
+    const {
+      id,
+      name,
+      price,
+      color,
+      amountAvailable,
+      description,
+      size,
+      brand,
+    } = this.state;
+    let product = {
+      id,
+      name,
+      price,
+      color,
+      amountAvailable,
+      description,
+      size,
+      brand,
+    };
     this.props.updateProduct(product);
   };
 
@@ -68,6 +89,8 @@ export class UpdateProductPopUp extends React.Component {
       amountAvailable,
       description,
       size,
+      brand,
+      brands,
     } = this.state;
     return (
       <div className="popup">
@@ -80,6 +103,7 @@ export class UpdateProductPopUp extends React.Component {
               <label>Description:</label>
               <label>Amount Available:</label>
               <label>Size</label>
+              <label>Brand</label>
             </div>
             <div className="popup__inner__div__input-div">
               <input
@@ -117,9 +141,23 @@ export class UpdateProductPopUp extends React.Component {
                   <div className="col-md-2"></div>
                   <div className="col-md-6">
                     <Select
+                      placeholder={size}
                       value={size}
+                      onChange={this.handleUpdateSizeValue}
                       options={SIZES}
-                      onChange={(e) => this.handleUpdateSizeValue(e)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-2"></div>
+                  <div className="col-md-6">
+                    <Select
+                      placeholder={brand.name}
+                      value={brand.name}
+                      onChange={this.handleUpdateBrandValue}
+                      options={brands}
                     />
                   </div>
                 </div>

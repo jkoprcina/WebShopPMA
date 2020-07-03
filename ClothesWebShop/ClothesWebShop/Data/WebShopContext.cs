@@ -132,6 +132,16 @@ namespace ClothesWebShop.Data
                 {
                     Id = 1,
                     Name = "Nike",
+                },
+                 new Brand()
+                {
+                    Id = 2,
+                    Name = "Addidas",
+                },
+                new Brand()
+                {
+                    Id = 3,
+                    Name = "Zoe",
                 }
             };
 

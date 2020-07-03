@@ -6,6 +6,7 @@ export const getBrands = () =>
     .then((response) => {
       return response.data;
     })
-    .catch(() => {
-      alert("Get brands failed");
+    .catch((response) => {
+      alert(response);
+      return null;
     });

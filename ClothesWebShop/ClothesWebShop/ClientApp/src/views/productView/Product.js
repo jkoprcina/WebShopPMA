@@ -9,6 +9,7 @@ import {
 } from "../../apiRequests/productRequests";
 import { addProductInCart } from "../../apiRequests/productInCartRequests";
 import { getUserById } from "../../apiRequests/userRequests";
+import { getBrands } from "../../apiRequests/brandRequests";
 import { getCookie } from "../../cookie";
 import "../../css/product.css";
 import { validateProduct } from "../../validations/productValidations";
@@ -24,6 +25,8 @@ export class Product extends React.Component {
       updateProductPopUpBool: false,
       productError: "",
       isAdmin: false,
+      selectBrandOptions: null,
+      brands: null,
     };
   }
 
@@ -48,6 +51,16 @@ export class Product extends React.Component {
             }
           });
         }
+      });
+    }
+    if (this.state.selectBrandOptions === null) {
+      getBrands().then((brands) => {
+        this.setState({ brands });
+        let selectBrandOptions = [];
+        brands.map((brand) =>
+          selectBrandOptions.push({ value: brand.id, label: brand.name })
+        );
+        this.setState({ selectBrandOptions });
       });
     }
   }
@@ -114,7 +127,6 @@ export class Product extends React.Component {
   };
 
   handleUpdateProduct = (product) => {
-    console.log(product);
     let updateProductError = validateProduct(
       product.name,
       product.price,
@@ -128,7 +140,9 @@ export class Product extends React.Component {
         product.price,
         product.description,
         product.color,
-        product.amountAvailable
+        product.amountAvailable,
+        product.size,
+        product.brand
       ).then((response) => {
         if (response !== null) {
           this.setState({ product: response });
@@ -151,6 +165,7 @@ export class Product extends React.Component {
       product,
       amountSelected,
       isAdmin,
+      selectBrandOptions,
       addToCartPopUpBool,
       updateProductPopUpBool,
     } = this.state;
@@ -184,11 +199,12 @@ export class Product extends React.Component {
           ) : null}
         </div>
         <div>
-          {updateProductPopUpBool ? (
+          {updateProductPopUpBool && selectBrandOptions !== null ? (
             <UpdateProductPopUp
               updateProduct={this.handleUpdateProduct}
               exit={this.handleToggleUpdateProductPopUp}
               product={product}
+              brands={selectBrandOptions}
               updateProductError={this.state.updateProductError}
             />
           ) : null}
