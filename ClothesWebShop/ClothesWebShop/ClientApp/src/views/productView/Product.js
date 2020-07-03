@@ -131,7 +131,9 @@ export class Product extends React.Component {
       product.name,
       product.price,
       product.description,
-      product.amountAvailable
+      product.amountAvailable,
+      product.size,
+      product.brand
     );
     if (updateProductError === "None") {
       updateProduct(

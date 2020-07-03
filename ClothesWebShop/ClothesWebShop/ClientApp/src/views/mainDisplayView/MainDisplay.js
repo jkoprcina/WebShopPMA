@@ -17,6 +17,8 @@ export class MainDisplay extends React.Component {
       addProductPopUpBool: null,
       productError: "",
       isAdmin: false,
+      selectBrandOptions: null,
+      brands: null,
     };
   }
 
@@ -27,11 +29,16 @@ export class MainDisplay extends React.Component {
           this.setState({ products });
         }
       });
-      getBrands().then((brands) => {
-        if (brands !== undefined) {
+      if (this.state.selectBrandOptions === null) {
+        getBrands().then((brands) => {
           this.setState({ brands });
-        }
-      });
+          let selectBrandOptions = [];
+          brands.map((brand) =>
+            selectBrandOptions.push({ value: brand.id, label: brand.name })
+          );
+          this.setState({ selectBrandOptions });
+        });
+      }
     }
     let id = getCookie("id");
     if (id !== null) {
@@ -60,7 +67,9 @@ export class MainDisplay extends React.Component {
       product.name,
       product.price,
       product.description,
-      product.amountAvailable
+      product.amountAvailable,
+      product.size,
+      product.brand
     );
     if (productError === "None") {
       addProduct(
@@ -68,7 +77,9 @@ export class MainDisplay extends React.Component {
         product.price,
         product.description,
         product.color,
-        product.amountAvailable
+        product.amountAvailable,
+        product.size,
+        product.brand
       ).then(() => {
         getProducts().then((products) => {
           this.setState({ products });
@@ -81,7 +92,12 @@ export class MainDisplay extends React.Component {
   };
 
   render() {
-    const { products, addProductPopUpBool, isAdmin } = this.state;
+    const {
+      products,
+      addProductPopUpBool,
+      isAdmin,
+      selectBrandOptions,
+    } = this.state;
     return (
       <div className="main-display-view">
         <div className="filter">
@@ -114,8 +130,9 @@ export class MainDisplay extends React.Component {
             ))}
           </div>
         )}
-        {addProductPopUpBool ? (
+        {addProductPopUpBool && selectBrandOptions !== null ? (
           <AddProductPopUp
+            brands={selectBrandOptions}
             addProduct={this.handleAddProduct}
             exit={this.handleToggleAddProductPopUp}
             productError={this.state.productError}

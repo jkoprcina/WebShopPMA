@@ -1,5 +1,16 @@
-export const validateProduct = (name, price, description, amountAvailable) => {
-  if (name.length < 3 || name.length > 50) {
+export const validateProduct = (
+  name,
+  price,
+  description,
+  amountAvailable,
+  size,
+  brand
+) => {
+  if (size === "") {
+    return "Please choose a size";
+  } else if (brand === "") {
+    return "Please choose a brand";
+  } else if (name.length < 3 || name.length > 50) {
     return "The name must be between 3 and 50 characters long";
   } else if (!(price > 0)) {
     return "The price must be a positive number";

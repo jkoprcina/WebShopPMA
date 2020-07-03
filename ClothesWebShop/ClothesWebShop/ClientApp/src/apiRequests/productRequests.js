@@ -26,7 +26,8 @@ export const addProduct = (
   description,
   color,
   amountAvailable,
-  brandId
+  size,
+  brand
 ) =>
   axios
     .post("api/products", {
@@ -35,13 +36,15 @@ export const addProduct = (
       description,
       color,
       amountAvailable,
-      brandId: 1,
+      size,
+      brandId: brand.id,
     })
     .then((response) => {
       return response.data;
     })
-    .catch(() => {
-      alert("Add product failed");
+    .catch((response) => {
+      alert(response);
+      return null;
     });
 
 export const updateProduct = (

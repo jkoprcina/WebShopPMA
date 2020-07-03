@@ -1,4 +1,7 @@
 import React from "react";
+import Select from "react-select";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { SIZES } from "../../constants";
 
 export class AddProductPopUp extends React.Component {
   constructor(props) {
@@ -9,6 +12,9 @@ export class AddProductPopUp extends React.Component {
       color: "",
       amountAvailable: "0",
       description: "",
+      size: "",
+      brand: "",
+      brands: props.brands,
     };
   }
 
@@ -42,14 +48,47 @@ export class AddProductPopUp extends React.Component {
     });
   };
 
+  handleUpdateSizeValue = (e) => {
+    this.setState({ size: e.value });
+  };
+
+  handleUpdateBrandValue = (e) => {
+    this.setState({ brand: { name: e.label, id: e.value } });
+  };
+
   handleCreateNewProductAndCallAddProduct = () => {
-    const { name, price, color, amountAvailable, description } = this.state;
-    let product = { name, price, color, amountAvailable, description };
+    const {
+      name,
+      price,
+      color,
+      amountAvailable,
+      description,
+      size,
+      brand,
+    } = this.state;
+    let product = {
+      name,
+      price,
+      color,
+      amountAvailable,
+      description,
+      size,
+      brand,
+    };
     this.props.addProduct(product);
   };
 
   render() {
-    const { name, price, color, amountAvailable, description } = this.state;
+    const {
+      name,
+      price,
+      color,
+      amountAvailable,
+      description,
+      size,
+      brand,
+      brands,
+    } = this.state;
     return (
       <div className="popup">
         <div className="popup__inner">
@@ -60,6 +99,8 @@ export class AddProductPopUp extends React.Component {
               <label>Color:</label>
               <label>Description:</label>
               <label>Amount Available:</label>
+              <label>Size</label>
+              <label>Brand</label>
             </div>
             <div className="popup__inner__div__input-div">
               <input
@@ -92,6 +133,32 @@ export class AddProductPopUp extends React.Component {
                 value={amountAvailable}
                 onChange={(e) => this.handleUpdateAmountAvailableValue(e)}
               />
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-2"></div>
+                  <div className="col-md-6">
+                    <Select
+                      placeholder={size}
+                      value={size}
+                      onChange={this.handleUpdateSizeValue}
+                      options={SIZES}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-2"></div>
+                  <div className="col-md-6">
+                    <Select
+                      placeholder={brand.name}
+                      value={brand.name}
+                      onChange={this.handleUpdateBrandValue}
+                      options={brands}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <p className="popup__inner__error-message">
