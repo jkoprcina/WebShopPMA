@@ -1,6 +1,7 @@
 import React from "react";
 import { Login } from "./Login";
 import { Register } from "./Register";
+import { NavMenu } from "../NavMenu";
 import {
   getUserByUsernamePassword,
   createUser,
@@ -25,6 +26,7 @@ export class LoginRegister extends React.Component {
       passwordRepeat: "",
       loginError: "",
       registerError: "",
+      value: 0,
     };
   }
 
@@ -37,6 +39,10 @@ export class LoginRegister extends React.Component {
       password: "",
       passwordRepeat: "",
     });
+  };
+
+  handleRerenderParentCallback = () => {
+    this.setState({ value: this.state.value++ });
   };
 
   handleChangeToLoginPage = () => {
@@ -164,36 +170,39 @@ export class LoginRegister extends React.Component {
       registerError,
     } = this.state;
     return (
-      <div className="login-register-view">
-        {isLogin ? (
-          <Login
-            email={email}
-            password={password}
-            loginError={loginError}
-            updateEmailValue={this.handleUpdateEmailValue}
-            updatePasswordValue={this.handleUpdatePasswordValue}
-            login={this.handleLogin}
-            changeRegisterPage={this.handleChangeToRegisterPage}
-          />
-        ) : (
-          <Register
-            firstName={firstName}
-            lastName={lastName}
-            email={email}
-            username={username}
-            password={password}
-            passwordRepeat={passwordRepeat}
-            registerError={registerError}
-            updateFirstNameValue={this.handleUpdateFirstNameValue}
-            updateLastNameValue={this.handleUpdateLastNameValue}
-            updateEmailValue={this.handleUpdateEmailValue}
-            updateUsernameValue={this.handleUpdateUsernameValue}
-            updatePasswordValue={this.handleUpdatePasswordValue}
-            updatePasswordRepeatValue={this.handleUpdatePasswordRepeatValue}
-            register={this.handleRegister}
-            changeToLoginPage={this.handleChangeToLoginPage}
-          />
-        )}
+      <div>
+        <NavMenu rerenderParentCallback={this.handleRerenderParentCallback} />
+        <div className="login-register-view">
+          {isLogin ? (
+            <Login
+              email={email}
+              password={password}
+              loginError={loginError}
+              updateEmailValue={this.handleUpdateEmailValue}
+              updatePasswordValue={this.handleUpdatePasswordValue}
+              login={this.handleLogin}
+              changeRegisterPage={this.handleChangeToRegisterPage}
+            />
+          ) : (
+            <Register
+              firstName={firstName}
+              lastName={lastName}
+              email={email}
+              username={username}
+              password={password}
+              passwordRepeat={passwordRepeat}
+              registerError={registerError}
+              updateFirstNameValue={this.handleUpdateFirstNameValue}
+              updateLastNameValue={this.handleUpdateLastNameValue}
+              updateEmailValue={this.handleUpdateEmailValue}
+              updateUsernameValue={this.handleUpdateUsernameValue}
+              updatePasswordValue={this.handleUpdatePasswordValue}
+              updatePasswordRepeatValue={this.handleUpdatePasswordRepeatValue}
+              register={this.handleRegister}
+              changeToLoginPage={this.handleChangeToLoginPage}
+            />
+          )}
+        </div>
       </div>
     );
   }

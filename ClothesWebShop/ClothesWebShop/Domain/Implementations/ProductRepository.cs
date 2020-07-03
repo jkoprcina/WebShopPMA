@@ -43,6 +43,8 @@ namespace ClothesWebShop.Repository
             if (oldProduct == null) 
                 return null;
 
+            _context.SaveChanges();
+
             oldProduct.Name = product.Name;
             oldProduct.Price = product.Price;
             oldProduct.Category = product.Category;
@@ -50,9 +52,11 @@ namespace ClothesWebShop.Repository
             oldProduct.Color = product.Color;
             oldProduct.Description = product.Description;
             oldProduct.Size = product.Size;
-            oldProduct.BrandId = product.Brand.Id;
-            oldProduct.Brand = product.Brand;
-
+            if (oldProduct.BrandId != product.Brand.Id)
+            {
+                oldProduct.BrandId = product.Brand.Id;
+                oldProduct.Brand = product.Brand;
+            }
             _context.SaveChanges();
             return oldProduct;
         }
@@ -61,7 +65,7 @@ namespace ClothesWebShop.Repository
         {
             var oldProduct = GetById(productId);
 
-            if(amountToRemove < oldProduct.AmountAvailable)
+            if(amountToRemove <= oldProduct.AmountAvailable)
                 oldProduct.AmountAvailable -= amountToRemove;
 
             return _context.SaveChanges();

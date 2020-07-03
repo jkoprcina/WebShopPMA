@@ -2,6 +2,7 @@ import React from "react";
 import { Info } from "./Info";
 import { AddToCartPopUp } from "./AddToCartPopUp";
 import { UpdateProductPopUp } from "./UpdateProductPopUp";
+import { NavMenu } from "../NavMenu";
 import {
   getProduct,
   updateProduct,
@@ -27,6 +28,7 @@ export class Product extends React.Component {
       isAdmin: false,
       selectBrandOptions: null,
       brands: null,
+      value: 0,
     };
   }
 
@@ -64,6 +66,10 @@ export class Product extends React.Component {
       });
     }
   }
+
+  handleRerenderParentCallback = () => {
+    this.setState({ value: this.state.value++ });
+  };
 
   handleLowerAmountSelectedByOne = () => {
     let amountSelected = this.state.amountSelected - 1;
@@ -172,44 +178,47 @@ export class Product extends React.Component {
       updateProductPopUpBool,
     } = this.state;
     return (
-      <div className="product-view">
-        <div className="image-display">
-          <img src={require("../../images/shirt.jpg")} alt="Man in Shirt" />
-        </div>
-        {product === null ? (
-          <div></div>
-        ) : (
-          <Info
-            amountSelected={amountSelected}
-            product={product}
-            isAdmin={isAdmin}
-            addToCart={this.handleAddToCart}
-            lowerAmountSelectedByOne={this.handleLowerAmountSelectedByOne}
-            raiseAmountSelectedByOne={this.handleRaiseAmountSelectedByOne}
-            deleteProduct={this.handleDeleteProduct}
-            updateProduct={this.handleToggleUpdateProductPopUp}
-          />
-        )}
-        <div>
-          {addToCartPopUpBool ? (
-            <AddToCartPopUp
-              goToCart={this.handleGoToCart}
-              stayOnProduct={this.handleStayOnProduct}
-              product={product}
+      <div>
+        <NavMenu rerenderParentCallback={this.handleRerenderParentCallback} />
+        <div className="product-view">
+          <div className="image-display">
+            <img src={require("../../images/shirt.jpg")} alt="Man in Shirt" />
+          </div>
+          {product === null ? (
+            <div></div>
+          ) : (
+            <Info
               amountSelected={amountSelected}
-            />
-          ) : null}
-        </div>
-        <div>
-          {updateProductPopUpBool && selectBrandOptions !== null ? (
-            <UpdateProductPopUp
-              updateProduct={this.handleUpdateProduct}
-              exit={this.handleToggleUpdateProductPopUp}
               product={product}
-              brands={selectBrandOptions}
-              updateProductError={this.state.updateProductError}
+              isAdmin={isAdmin}
+              addToCart={this.handleAddToCart}
+              lowerAmountSelectedByOne={this.handleLowerAmountSelectedByOne}
+              raiseAmountSelectedByOne={this.handleRaiseAmountSelectedByOne}
+              deleteProduct={this.handleDeleteProduct}
+              updateProduct={this.handleToggleUpdateProductPopUp}
             />
-          ) : null}
+          )}
+          <div>
+            {addToCartPopUpBool ? (
+              <AddToCartPopUp
+                goToCart={this.handleGoToCart}
+                stayOnProduct={this.handleStayOnProduct}
+                product={product}
+                amountSelected={amountSelected}
+              />
+            ) : null}
+          </div>
+          <div>
+            {updateProductPopUpBool && selectBrandOptions !== null ? (
+              <UpdateProductPopUp
+                updateProduct={this.handleUpdateProduct}
+                exit={this.handleToggleUpdateProductPopUp}
+                product={product}
+                brands={selectBrandOptions}
+                updateProductError={this.state.updateProductError}
+              />
+            ) : null}
+          </div>
         </div>
       </div>
     );

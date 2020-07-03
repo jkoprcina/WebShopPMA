@@ -1,5 +1,6 @@
 import React from "react";
 import { AddProductPopUp } from "./AddProductPopUp";
+import { NavMenu } from "../NavMenu";
 import { getProducts, addProduct } from "../../apiRequests/productRequests";
 import { getBrands } from "../../apiRequests/brandRequests";
 import { getUserById } from "../../apiRequests/userRequests";
@@ -16,13 +17,17 @@ export class MainDisplay extends React.Component {
       user: null,
       addProductPopUpBool: null,
       productError: "",
-      isAdmin: false,
       selectBrandOptions: null,
       brands: null,
+      value: 0,
     };
   }
 
   componentDidMount() {
+    this.getInfo();
+  }
+
+  getInfo = () => {
     if (this.state.products === null) {
       getProducts().then((products) => {
         if (products !== undefined) {
@@ -44,12 +49,15 @@ export class MainDisplay extends React.Component {
     if (id !== null) {
       getUserById(id).then((user) => {
         this.setState({ user });
-        if (user.isAdmin) {
-          this.setState({ isAdmin: true });
-        }
       });
+    } else {
+      this.setState({ user: null });
     }
-  }
+  };
+
+  handleRerenderParentCallback = () => {
+    this.getInfo();
+  };
 
   handleToggleAddProductPopUp = () => {
     this.setState({
@@ -95,51 +103,57 @@ export class MainDisplay extends React.Component {
     const {
       products,
       addProductPopUpBool,
-      isAdmin,
+      user,
       selectBrandOptions,
     } = this.state;
     return (
-      <div className="main-display-view">
-        <div className="filter">
-          {isAdmin ? (
-            <button
-              className="main-display-view__button"
-              onClick={this.handleToggleAddProductPopUp}
-            >
-              Add new product
-            </button>
+      <div>
+        <NavMenu rerenderParentCallback={this.handleRerenderParentCallback} />
+        <div className="main-display-view">
+          <div className="filter">
+            {user !== null && user.isAdmin ? (
+              <button
+                className="main-display-view__button"
+                onClick={this.handleToggleAddProductPopUp}
+              >
+                Add new product
+              </button>
+            ) : (
+              <div></div>
+            )}
+          </div>
+          {products === null ? (
+            <div></div>
+          ) : (
+            <div className="display">
+              {products.map((product, index) => (
+                <NavLink
+                  tag={Link}
+                  className="text-dark"
+                  to={`/product/${product.id}`}
+                  key={index}
+                >
+                  <div className="product">
+                    <img
+                      src={require("../../images/shirt.jpg")}
+                      alt="Product"
+                    />
+                  </div>
+                </NavLink>
+              ))}
+            </div>
+          )}
+          {addProductPopUpBool && selectBrandOptions !== null ? (
+            <AddProductPopUp
+              brands={selectBrandOptions}
+              addProduct={this.handleAddProduct}
+              exit={this.handleToggleAddProductPopUp}
+              productError={this.state.productError}
+            />
           ) : (
             <div></div>
           )}
         </div>
-        {products === null ? (
-          <div></div>
-        ) : (
-          <div className="display">
-            {products.map((product, index) => (
-              <NavLink
-                tag={Link}
-                className="text-dark"
-                to={`/product/${product.id}`}
-                key={index}
-              >
-                <div className="product">
-                  <img src={require("../../images/shirt.jpg")} alt="Product" />
-                </div>
-              </NavLink>
-            ))}
-          </div>
-        )}
-        {addProductPopUpBool && selectBrandOptions !== null ? (
-          <AddProductPopUp
-            brands={selectBrandOptions}
-            addProduct={this.handleAddProduct}
-            exit={this.handleToggleAddProductPopUp}
-            productError={this.state.productError}
-          />
-        ) : (
-          <div></div>
-        )}
       </div>
     );
   }

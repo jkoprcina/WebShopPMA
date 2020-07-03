@@ -46,6 +46,7 @@ export class NavMenu extends React.Component {
         UserProfilePopUpBool: !this.state.UserProfilePopUpBool,
         user: null,
       });
+      this.props.rerenderParentCallback();
     });
   };
 
