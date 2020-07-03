@@ -1,6 +1,6 @@
 ﻿namespace ClothesWebShop.Data.Dto
 {
-    public class AddProductToCart
+    public class AddOrderModel
     {
         public double Price { get; set; }   
         public int AmountSelected { get; set; }

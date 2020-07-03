@@ -16,7 +16,7 @@ namespace ClothesWebShop.Repository
         public int Add(Order order)
         {
             if (order != null) {
-                _context.Add(order); 
+                _context.Add(order);
             }
             return _context.SaveChanges();
         }

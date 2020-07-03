@@ -69,20 +69,14 @@ export class NavMenu extends React.Component {
                     Home
                   </NavLink>
                 </NavItem>
-                {user === null ? (
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/login">
-                      Login/Register
-                    </NavLink>
-                  </NavItem>
-                ) : (
+                {user !== null && !user.isAdmin ? (
                   <NavItem>
                     <NavLink tag={Link} className="text-dark" to="/cart">
                       Cart
                     </NavLink>
                   </NavItem>
-                )}
-                {UserProfilePopUpBool ? (
+                ) : null}
+                {user !== null && UserProfilePopUpBool ? (
                   <UserProfilePopUp
                     user={user}
                     toggle={this.handleToggle}
@@ -90,9 +84,18 @@ export class NavMenu extends React.Component {
                   />
                 ) : null}
                 {user === null ? (
-                  <div></div>
+                  <NavItem>
+                    <NavLink tag={Link} className="text-dark" to="/login">
+                      Login/Register
+                    </NavLink>
+                  </NavItem>
                 ) : (
-                  <span onClick={this.handleToggle}>{user.username}</span>
+                  <button
+                    className="nav-bar__user-button"
+                    onClick={this.handleToggle}
+                  >
+                    {user.username}
+                  </button>
                 )}
               </ul>
             </Collapse>

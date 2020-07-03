@@ -7,6 +7,12 @@
 html {
   font-size: 14px;
 }
+
+.nav-bar__user-button {
+  color: green;
+  font-weight: 700;
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;

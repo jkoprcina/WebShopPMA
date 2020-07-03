@@ -13,6 +13,8 @@ namespace ClothesWebShop.Interfaces
 
         Product Update(Product product);
 
+        int RemoveAmount(int productId, int amountToRemove);
+
         int Delete(int productId);
     }
 }

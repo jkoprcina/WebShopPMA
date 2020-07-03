@@ -9,7 +9,7 @@ export const ConfirmationPopUp = (props) => {
         </div>
         <div className="popup__inner__button-div">
           <button
-            className="popup__inner__button-div__button-basket"
+            className="popup__inner__button-div__button-full"
             onClick={() => props.goToMainPage()}
           >
             Go back to shopping

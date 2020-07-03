@@ -7,7 +7,7 @@ import {
   updateProduct,
   deleteProduct,
 } from "../../apiRequests/productRequests";
-import { addProductInCart } from "../../apiRequests/productInCartRequests";
+import { addUpdateProductInCart } from "../../apiRequests/productInCartRequests";
 import { getUserById } from "../../apiRequests/userRequests";
 import { getBrands } from "../../apiRequests/brandRequests";
 import { getCookie } from "../../cookie";
@@ -87,7 +87,7 @@ export class Product extends React.Component {
       } else {
         getUserById(id).then((user) => {
           this.setState({ user });
-          addProductInCart(
+          addUpdateProductInCart(
             this.state.product.id,
             this.state.user.id,
             this.state.amountSelected,

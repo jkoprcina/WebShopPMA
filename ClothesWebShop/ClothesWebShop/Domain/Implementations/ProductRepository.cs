@@ -57,6 +57,16 @@ namespace ClothesWebShop.Repository
             return oldProduct;
         }
 
+        public int RemoveAmount(int productId, int amountToRemove)
+        {
+            var oldProduct = GetById(productId);
+
+            if(amountToRemove < oldProduct.AmountAvailable)
+                oldProduct.AmountAvailable -= amountToRemove;
+
+            return _context.SaveChanges();
+        }
+
         public int Delete(int id)
         {
             var productToRemove = _context.Products

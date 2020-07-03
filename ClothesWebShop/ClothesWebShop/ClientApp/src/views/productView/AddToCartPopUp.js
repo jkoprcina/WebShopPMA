@@ -17,13 +17,13 @@ export const AddToCartPopUp = (props) => {
         </div>
         <div className="popup__inner__button-div">
           <button
-            className="popup__inner__button-div__button-basket"
+            className="popup__inner__button-div__button-empty"
             onClick={() => props.goToCart()}
           >
             Go to Cart
           </button>
           <button
-            className="popup__inner__button-div__button-stay"
+            className="popup__inner__button-div__button-full"
             onClick={() => props.stayOnProduct()}
           >
             Continue Shopping

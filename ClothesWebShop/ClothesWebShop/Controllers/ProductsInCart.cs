@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ClothesWebShop.Controllers
 {
-    [Route("api/cart")]
+    [Route("api/productsInCart")]
     [ApiController]
     public class ProductsInCartController : ControllerBase
     {
@@ -14,13 +14,13 @@ namespace ClothesWebShop.Controllers
             _productsInCartRepository = productsInCartRepository;
         }
 
-        [HttpPost("add")]
-        public IActionResult Add(ProductInCart productInCart)
+        [HttpPost]
+        public IActionResult AddUpdate(ProductInCart productInCart)
         {
-            return Ok(_productsInCartRepository.Add(productInCart));
+            return Ok(_productsInCartRepository.AddUpdate(productInCart));
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
             var result = _productsInCartRepository.Delete(id);

@@ -8,7 +8,7 @@ export const Info = (props) => {
       <p>Available in size: {props.product.size}</p>
       <p>Price: {props.product.price} $</p>
       <p>Brand: {props.product.brand.name}</p>
-      <p>Ammount available: {props.product.amountAvailable}</p>
+      <p>Amount available: {props.product.amountAvailable}</p>
       <div>
         <span className="prettyMinus" onClick={props.lowerAmountSelectedByOne}>
           &#8722;

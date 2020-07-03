@@ -5,7 +5,7 @@ import { getCookie } from "../../cookie";
 import { getUserById } from "../../apiRequests/userRequests";
 import { addOrder } from "../../apiRequests/orderRequests";
 import {
-  addProductInCart,
+  addUpdateProductInCart,
   deleteProductInCart,
 } from "../../apiRequests/productInCartRequests";
 import "../../css/cart.css";
@@ -17,6 +17,7 @@ export class Cart extends React.Component {
       totalPrice: 0,
       productsInCart: [],
       confirmationPopUpBool: false,
+      user: null,
     };
     this.getUser();
   }
@@ -48,30 +49,26 @@ export class Cart extends React.Component {
 
   handleLowerAmountSelectedByOne = (item) => {
     if (item.amountSelected > 0) {
-      addProductInCart(
+      addUpdateProductInCart(
         item.userId,
         item.productId,
         item.amountSelected - 1,
         item.price
-      ).then((response) => {
-        getUserById(item.userId).then((user) => {
-          this.setState({ user });
-        });
+      ).then(() => {
+        this.getUser();
       });
     }
   };
 
   handleRaiseAmountSelectedByOne = (item) => {
-    if (item.amountSelected > item.amountSelected) {
-      addProductInCart(
+    if (item.amountSelected < item.product.amountAvailable) {
+      addUpdateProductInCart(
         item.userId,
         item.productId,
         item.amountSelected + 1,
         item.price
       ).then(() => {
-        getUserById(item.userId).then((user) => {
-          this.setState({ user });
-        });
+        this.getUser();
       });
     }
   };
@@ -105,11 +102,10 @@ export class Cart extends React.Component {
     this.props.history.push("/");
   };
 
-  handleRemoveProduct = (productId) => {
+  handleRemoveProductInCart = (productId) => {
     deleteProductInCart(productId).then(
       getUserById(this.state.user.id).then((user) => {
-        this.setState({ user });
-        this.calculatePrice();
+        this.getUser();
       })
     );
   };
@@ -162,7 +158,7 @@ export class Cart extends React.Component {
                       </div>
                     </div>
                     <button
-                      onClick={() => this.handleRemoveFromBasket(item.id)}
+                      onClick={() => this.handleRemoveProductInCart(item.id)}
                     >
                       Remove
                     </button>

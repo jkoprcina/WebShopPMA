@@ -1,27 +1,33 @@
 import axios from "axios";
 
-export const addProductInCart = (productId, userId, amountSelected, price) =>
+export const addUpdateProductInCart = (
+  productId,
+  userId,
+  amountSelected,
+  price
+) =>
   axios
-    .post("api/cart/add", {
+    .post("api/productsInCart", {
       productId,
       userId,
       amountSelected,
       price,
     })
     .then((response) => {
-      console.log(response);
       return response.data;
     })
-    .catch(() => {
-      alert("Add product to cart failed");
+    .catch((response) => {
+      alert(response);
+      return null;
     });
 
 export const deleteProductInCart = (productInCartId) =>
   axios
-    .delete("api/cart/delete", { params: { productInCartId } })
+    .delete("api/productsInCart", { params: { id: productInCartId } })
     .then((response) => {
       return response.data;
     })
-    .catch(() => {
-      alert("Delete product form cart failed");
+    .catch((response) => {
+      alert(response);
+      return null;
     });

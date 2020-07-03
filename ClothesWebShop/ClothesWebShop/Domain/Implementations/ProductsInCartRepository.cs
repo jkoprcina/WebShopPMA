@@ -14,21 +14,31 @@ namespace ClothesWebShop.Repository
             _context = context;
         }
 
-        public int Add(ProductInCart productInCart)
+        private ProductInCart Get(int productId, int userId)
+        { 
+            return _context.ProductsInCart
+                .FirstOrDefault(b => b.ProductId == productId && b.UserId == userId);
+        }
+        public int AddUpdate(ProductInCart newProductInCart)
         {
-            var oldCart = _context.ProductsInCart
-                .FirstOrDefault(b => b.ProductId == productInCart.ProductId && b.UserId == productInCart.UserId);
+            var oldProductInCart = Get(newProductInCart.ProductId, newProductInCart.UserId);
 
-            if (oldCart == null)
-            {
-                _context.ProductsInCart.Add(productInCart);
-                return _context.SaveChanges();
-            }
-            else 
-            {
-                oldCart.AmountSelected = productInCart.AmountSelected;
-                return _context.SaveChanges();
-            }
+            if (oldProductInCart == null)
+                return Add(newProductInCart);
+            else
+                return Update(newProductInCart, oldProductInCart);
+        }
+
+        private int Add(ProductInCart newProductInCart)
+        {
+            _context.ProductsInCart.Add(newProductInCart);
+            return _context.SaveChanges();
+        }
+
+        private int Update(ProductInCart productInCart, ProductInCart oldProductInCart)
+        {
+            oldProductInCart.AmountSelected = productInCart.AmountSelected;
+            return _context.SaveChanges();
         }
 
         public int Delete(int id)
